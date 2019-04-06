@@ -1,0 +1,14 @@
+html,
+body,
+header,
+#intro{
+    height: 100%;
+}
+
+#intro{
+background: url("https://images.pexels.com/photos/159621/open-book-library-education-read-159621.jpeg?auto=compress&")no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+}
