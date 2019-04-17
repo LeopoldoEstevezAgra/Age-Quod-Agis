@@ -15,17 +15,17 @@
             {% if app.user %}
             <div class="row center mg-top-30">
                 <a href="{{path('logout')}}" class="btn btn-default border-light-gray mg-right-30">
-                    Log Out 
+                    <b>Log Out </b>
                 </a>
             </div>
 
             {% else %}
             <div class="row center mg-top-30">
-                <a href="{{path('register')}}" class="btn btn-default border-light-gray mg-right-30">
-                    Sign in
+                <a href="{{path('register')}}" class="btn btn-default bg-darkgray mg-right-30 border-radius-30">
+                    <b>Sign in</b>
                 </a>
-                <a href="{{path('login')}}" class="btn btn-default border-light-gray ">
-                    Login
+                <a href="{{path('login')}}" class="btn btn-default bg-darkgray border-radius-30">
+                    <b> Login</b>
                 </a>
 
                 {% endif %}

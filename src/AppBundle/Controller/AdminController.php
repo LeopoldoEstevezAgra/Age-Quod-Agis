@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", homepage")
+     * @Route("/", home")
      */
     /* public function indexAction(Request $request)
     {
