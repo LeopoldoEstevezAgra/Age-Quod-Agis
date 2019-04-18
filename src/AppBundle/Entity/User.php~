@@ -220,38 +220,4 @@ class User implements UserInterface, \Serializable
     {
         return $this->monthTasks;
     }
-
-    /**
-     * Add dayTask
-     *
-     * @param \AppBundle\Entity\DayTask $dayTask
-     *
-     * @return User
-     */
-    public function addDayTask(\AppBundle\Entity\DayTask $dayTask)
-    {
-        $this->dayTasks[] = $dayTask;
-
-        return $this;
-    }
-
-    /**
-     * Remove dayTask
-     *
-     * @param \AppBundle\Entity\DayTask $dayTask
-     */
-    public function removeDayTask(\AppBundle\Entity\DayTask $dayTask)
-    {
-        $this->dayTasks->removeElement($dayTask);
-    }
-
-    /**
-     * Get dayTasks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDayTasks()
-    {
-        return $this->dayTasks;
-    }
 }

@@ -20,9 +20,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         if ($this->getUser() != null) {
-            return $this->render('journal/base.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-            ]);
+            return $this->redirectToRoute('journalIndex');
         }
         // replace this example code with whatever you need
         return $this->render('front/index.html.twig', [

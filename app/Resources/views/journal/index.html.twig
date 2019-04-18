@@ -1,3 +1,4 @@
+{% extends "journal/base.html.twig" %}
 {% block stylesheets %}
 <link rel="stylesheet" href="{{asset('css/journal/index.css')}}">
 
@@ -5,12 +6,29 @@
 {% block body %}
 
 <div class="row justify-content-center">
-        <div  name = "box" class="col-12 col-lg-5 box">
-                
+        <div name="box" class="col-10 col-lg-5 box">
+                <div class="box-content">
+                </div>
+                <div class="box-add-task">
+                        {{form_start(formMonth)}}
+                        {{form_widget(formMonth.description,{'attr':{'class':'task-description'}})}}
+                        {{form_widget(formMonth.submit)}}
+                        {{form_end(formMonth)}}
+
+                </div>
         </div>
 
-        <div name = "box" class="col-12 col-lg-5 box">
-                
+        <div name="box" class="col-10 col-lg-5 box">
+                <div class="box-content">
+                </div>
+                <div class="box-add-task">
+                        {{form_start(formDay)}}
+                        {{form_widget(formDay.description,{'attr':{'class':'task-description'}})}}
+                        {{form_widget(formDay.submit)}}
+                        {{form_end(formDay)}}
+
+                </div>
+
         </div>
 </div>
 
