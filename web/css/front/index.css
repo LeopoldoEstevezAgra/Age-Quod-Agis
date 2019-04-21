@@ -23,5 +23,5 @@ background: url("https://images.pexels.com/photos/159621/open-book-library-educa
 
 .btn-default:hover{
     color: black;
-    background-color: lightgray;
+    background-color: #d3d3d3;
 }
