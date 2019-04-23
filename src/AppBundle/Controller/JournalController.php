@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use AppBundle\Form\UserType;
@@ -20,39 +21,46 @@ class JournalController extends Controller
 {
     /**
      * @Route("index",name="journalIndex")
-     */ 
-    public function indexTasks(Request $request)
+     * @Method("GET")
+     */
+    public function indexTasksAction(Request $request)
     {
         $monthTask = new MonthTask();
         $dayTask = new DayTask();
-        $formMonth = $this->createForm(MonthTaskType::class,$monthTask);
-        $formDay= $this->createForm(DayTaskType::class,$dayTask);
+        $formMonth = $this->createForm(MonthTaskType::class, $monthTask);
+        $formDay = $this->createForm(DayTaskType::class, $dayTask);
 
-        $formMonth ->handleRequest($request);
-        $formDay ->handleRequest($request);
-        if($formMonth->isSubmitted() && $formMonth->isValid()){
+        $formMonth->handleRequest($request);
+        $formDay->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+        $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
+        $userMonthTasks = $userMonthTaskRepository->findByUser($this->getUser()->getId());
+        $em->flush();
+
+        if ($formMonth->isSubmitted() && $formMonth->isValid()) {
             $user = $this->getUser();
             $monthTask->setUser($user);
 
-            $em=$this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($monthTask);
             $em->flush();
             return $this->redirectToRoute('journalIndex');
         }
-        if($formDay->isSubmitted() && $formDay->isValid()){
+        if ($formDay->isSubmitted() && $formDay->isValid()) {
             $user = $this->getUser();
             $dayTask->setUser($user);
 
-            $em=$this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($dayTask);
             $em->flush();
             return $this->redirectToRoute('journalIndex');
         }
 
-        return $this->render('journal/index.html.twig',[
-            'formMonth'=>$formMonth->createView(),
-            'formDay'=>$formDay->createView(),
-            ]);
+        return $this->render('journal/index.html.twig', [
+            'formMonth' => $formMonth->createView(),
+            'formDay' => $formDay->createView(),
+            'monthTasks' => $userMonthTasks
+        ]);
     }
 }
-
