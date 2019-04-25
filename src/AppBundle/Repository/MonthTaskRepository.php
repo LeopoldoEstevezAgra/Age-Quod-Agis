@@ -18,7 +18,6 @@ class MonthTaskRepository extends \Doctrine\ORM\EntityRepository
 			->setParameter(':userid',$user);
 
 		try {
-		echo($user);
 		} catch (\Throwable $th) {
 		}
 		$query = $qb->getQuery();

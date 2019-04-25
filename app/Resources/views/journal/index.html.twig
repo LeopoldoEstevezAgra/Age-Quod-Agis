@@ -26,9 +26,17 @@
 
                 </div>
         </div>
-
         <div name="box" class="col-10 col-lg-5 box">
                 <div class="box-content">
+                        <ul>
+                                {% for dTask in dayTasks %}
+                                <li>
+                                    <p></p>    
+                                    <p>{{dTask.description}}</p>    
+                                </li>
+                                        
+                                {% endfor %}
+                        </ul>
                 </div>
                 <div class="box-add-task">
                         {{form_start(formDay)}}
@@ -37,8 +45,9 @@
                         {{form_end(formDay)}}
 
                 </div>
-
+                </div>
         </div>
+
 </div>
 
 
