@@ -17,11 +17,11 @@ class MonthTaskType extends AbstractType
 			->add('description',TextType::class,[
 				'label'=>false,
 				'attr'=>[
-					'max_length'=>35
+					'maxlength'=>'40'
 				]
 			])
 			->add('submit',SubmitType::class,[
-				'label'=>'Submit'
+				'label'=>false
 			])
 			;
 

@@ -11,17 +11,23 @@
                         <ul>
                                 {% for mTask in monthTasks %}
                                 <li>
-                                    <p></p>    
-                                    <p>{{mTask.description}}</p>    
+                                        <p></p>
+                                        <p>{{mTask.description}}</p>
                                 </li>
-                                        
+
                                 {% endfor %}
                         </ul>
                 </div>
-                <div class="box-add-task">
+                <div>
                         {{form_start(formMonth)}}
-                        {{form_widget(formMonth.description,{'attr':{'class':'task-description'}})}}
-                        {{form_widget(formMonth.submit)}}
+                        <div class="container move-bottom">
+                                <div class="row ">
+                                        {{form_widget(formMonth.description,{'attr':{'class':'task-description col-11 '}})}}
+                                        {{form_widget(formMonth.submit,{'attr':{'class':'col-1 submit'}})}}
+
+                                </div>
+
+                        </div>
                         {{form_end(formMonth)}}
 
                 </div>
@@ -31,22 +37,28 @@
                         <ul>
                                 {% for dTask in dayTasks %}
                                 <li>
-                                    <p></p>    
-                                    <p>{{dTask.description}}</p>    
+                                        <p></p>
+                                        <p>{{dTask.description}}</p>
                                 </li>
-                                        
+
                                 {% endfor %}
                         </ul>
                 </div>
-                <div class="box-add-task">
+                <div>
                         {{form_start(formDay)}}
-                        {{form_widget(formDay.description,{'attr':{'class':'task-description'}})}}
-                        {{form_widget(formDay.submit)}}
+                        <div class="container move-bottom">
+                                <div class="row ">
+                                        {{form_widget(formDay.description,{'attr':{'class':'task-description col-11 '}})}}
+                                        {{form_widget(formDay.submit,{'attr':{'class':'col-1 submit'}})}}
+
+                                </div>
+
+                        </div>
                         {{form_end(formDay)}}
 
                 </div>
-                </div>
         </div>
+</div>
 
 </div>
 
