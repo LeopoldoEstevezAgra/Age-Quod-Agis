@@ -8,7 +8,7 @@
 <div class="row justify-content-center">
         <div name="box" class="col-10 col-lg-5 box">
                 <div class="box-content">
-                        <ul>
+                        <ul style="list-style:none;float:left;font-size:20px;">
                                 {% for mTask in monthTasks %}
                                 <li>
                                         <p></p>
@@ -23,7 +23,7 @@
                         <div class="container move-bottom">
                                 <div class="row ">
                                         {{form_widget(formMonth.description,{'attr':{'class':'task-description col-11 '}})}}
-                                        {{form_widget(formMonth.submit,{'attr':{'class':'col-1 submit'}})}}
+                                        {{form_widget(formMonth.submit,{'attr':{'class':'col-1 submit fas fa-plus'}})}}
 
                                 </div>
 
@@ -34,7 +34,7 @@
         </div>
         <div name="box" class="col-10 col-lg-5 box">
                 <div class="box-content">
-                        <ul>
+                        <ul style="list-style:none;float:left;font-size:20px;">
                                 {% for dTask in dayTasks %}
                                 <li>
                                         <p></p>
@@ -49,7 +49,7 @@
                         <div class="container move-bottom">
                                 <div class="row ">
                                         {{form_widget(formDay.description,{'attr':{'class':'task-description col-11 '}})}}
-                                        {{form_widget(formDay.submit,{'attr':{'class':'col-1 submit'}})}}
+                                        {{form_widget(formDay.submit,{'attr':{'class':'col-1 submit fas fa-plus'}})}}
 
                                 </div>
 
