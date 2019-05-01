@@ -34,11 +34,15 @@ class JournalController extends Controller
         $formDay->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
+
+
+
         $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
         $userMonthTasks = $userMonthTaskRepository->findByUser($this->getUser()->getId());
         $em->flush();
+
         $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
-        $userDayTasks = $userDayTaskRepository->findByUser($this->getUser()->getId());
+        $userDayTasks = $userDayTaskRepository->getThisMonthsTasks($this->getUser()->getId(),4);
         $em->flush();
 
         if ($formMonth->isSubmitted() && $formMonth->isValid()) {
@@ -64,7 +68,7 @@ class JournalController extends Controller
             'formMonth' => $formMonth->createView(),
             'formDay' => $formDay->createView(),
             'monthTasks' => $userMonthTasks,
-            'dayTasks' => $userDayTasks
+            'dayTasks' => $userDayTasks,
         ]);
     }
 }

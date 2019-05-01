@@ -35,10 +35,16 @@
         <div name="box" class="col-10 col-lg-5 box">
                 <div class="box-content">
                         <ul style="list-style:none;float:left;font-size:20px;">
+                                {% set currentDay = '' %}
                                 {% for dTask in dayTasks %}
+                                {% if currentDay != dTask.date|date('Y-m-d') %}
+
+                                <p>{{dTask.date|date('Y-m-d')}}</p>
+                                {% set currentDay = dTask.date|date('Y-m-d') %}
+                                {% endif %}
                                 <li>
                                         <p></p>
-                                        <p>{{dTask.description}}</p>
+                                        <p style="text-align: left">---->{{dTask.description}}</p>
                                 </li>
 
                                 {% endfor %}
