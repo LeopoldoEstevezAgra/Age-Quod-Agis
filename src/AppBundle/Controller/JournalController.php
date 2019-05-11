@@ -64,7 +64,7 @@ class JournalController extends Controller
             return $this->redirectToRoute('journalIndex');
         }
 
-        return $this->render('journal/index.html.twig', [
+        return $this->render('public/journal/index.html.twig', [
             'formMonth' => $formMonth->createView(),
             'formDay' => $formDay->createView(),
             'monthTasks' => $userMonthTasks,

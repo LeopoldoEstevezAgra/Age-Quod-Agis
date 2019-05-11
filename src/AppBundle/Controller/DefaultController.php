@@ -23,7 +23,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('journalIndex');
         }
         // replace this example code with whatever you need
-        return $this->render('front/index.html.twig', [
+        return $this->render('public/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);
     }
@@ -55,7 +55,7 @@ class DefaultController extends Controller
 
             return $this->redirectToRoute('homepage');
         }
-        return $this->render('front/register.html.twig', array('form' => $form->createView()));
+        return $this->render('public/accessControl/register.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -67,7 +67,7 @@ class DefaultController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('front/login.html.twig', array(
+        return $this->render('public/accessControl/login.html.twig', array(
             'last_username' => $lastUsername,
             'error' => $error
         ));

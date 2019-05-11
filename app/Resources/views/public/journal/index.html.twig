@@ -1,6 +1,7 @@
-{% extends "journal/base.html.twig" %}
+{% extends "public/journal/base.html.twig" %}
 {% block stylesheets %}
-<link rel="stylesheet" href="{{asset('css/journal/index.css')}}">
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
 
 {% endblock %}
 {% block body %}
