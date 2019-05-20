@@ -1,0 +1,108 @@
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('build/css/journal/event/new_edit.css') }}">
+<link rel="stylesheet" href="{{ asset('build/css/journal/category/scrollable_typehead.css') }}">
+
+{% endblock %}
+
+{% block heading_title %}
+{% trans %}new_event{% endtrans %}
+{% endblock %}
+{% block heading_breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="#">{% trans %}Home{% endtrans %}</a></li>
+    <li><a href="{{ path('journal_event_index') }}">{% trans %}Calendar{% endtrans %}</a></li>
+    <li class="active">{% trans %}New event{% endtrans %}</li>
+</ol>
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{% trans %}Nuevo evento{% endtrans %}</h2>
+            </div>
+            <div class="panel-body">
+                {{ form_row(form.title) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.description, {'attr':{'rows': 10}}) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.starts) }}
+
+
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.ends) }}
+
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.venue) }}
+
+
+                <div class="hr-line-dashed"></div>
+                {{ form_label(form.color) }}
+                {{ form_row(form.color, {'attr': {'class':'sr-only'}, 'label_attr': {'class':'sr-only'}}) }}
+
+                <input class="datetimepicker">
+
+
+                <ul id="list-colors" class="list-inline list-colors">
+                    <li class="active" style="display: inline-block">
+                        <button data-color="" class="btn btn-xs bg-white">
+                        </button>
+                    </li>
+                    {% for color in event.colors %}
+                    <li style="display: inline-block">
+                        <button data-color="{{ color }}" class="btn btn-xs bg-{{ color }}">
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                {#                     <div class="hr-line-dashed"></div>
+                    {{ include(':gestion/event:acl.form.html.twig') }} #}
+
+                <div class="hr-line-dashed"></div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o"></i>
+                        {% trans %}save{% endtrans %}
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_widget(form) }}
+{{ form_end(form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('input[name="event[color]"]:checked').each(function () {
+            $('#list-colors').find('li').removeClass('active');
+            $('#list-colors').find('button[data-color="' + $(this).val() + '"]').parent().addClass('active');
+        });
+        $('#list-colors').find('button').click(function (e) {
+            e.preventDefault();
+            var color = $(this).data('color');
+            $(this).closest('ul').find('li').removeClass('active');
+            $(this).closest('li').addClass('active');
+
+            $('input[name="event[color]"][value="' + color + '"]').prop('checked', true);
+
+        });
+    });
+
+
+</script>
+{% endblock %}

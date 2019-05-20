@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import "colors";
+
+$font-size-base: 0.9rem;
+$font-family-base: 'Open Sans', sans-serif;
+
+$brand-primary: $blue;
+$brand-danger: $red;
+$brand-info: $blue-light;
+$brand-success: $green;
+$brand-warning: $orange;
+
+$font-family-sans-serif: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$text-color: #676a6c;
+$headings-font-weight: 300;
+$btn-font-weight: 300;
+
+$navbar-border-radius: 0;
+$navbar-default-border: none;
+$navbar-default-bg: #F3F3F4;
+
+$navbar-inverse-bg: #2F4050;
+
+$breadcrumb-bg: none;
+$breadcrumb-padding-horizontal: 2px;
+$breadcrumb-padding-vertical: 0;
+
+$panel-border-radius: 0;
+$panel-default-heading-bg: white;
+$panel-default-border: none;
+$panel-footer-bg: white;
+
+$input-border-radius: 0;
+$border-radius-small : 10px;
+$border-radius-base: 10px;
+
+$gray-lighter : gray;
+
+$screen-md-min:600px;
+
+$btn-primary-border: $brand-primary;
+
+$table-border-color: $gray-alt;
+
+$text-muted: lighten(#000, 60%);

@@ -60,11 +60,17 @@ class User implements UserInterface, \Serializable
      */
     private $dayTasks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Event",mappedBy="user")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->monthTasks = new ArrayCollection();
         $this->dayTasks = new ArrayCollection();
+        $this->events= new ArrayCollection();
     }
 
     public function getUsername()
@@ -253,5 +259,39 @@ class User implements UserInterface, \Serializable
     public function getDayTasks()
     {
         return $this->dayTasks;
+    }
+
+    /**
+     * Add event 
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return User
+     */
+    public function addEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event 
+     *
+     * @param \AppBundle\Entity\Event $event
+     */
+    public function removeEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }

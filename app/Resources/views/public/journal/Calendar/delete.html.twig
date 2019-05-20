@@ -1,0 +1,28 @@
+{% extends 'dashboard/layout.html.twig' %}
+
+{% block heading_title %}
+    {% trans %}delete_event{% endtrans %}
+{% endblock %}
+{% block heading_breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('dashboard') }}">{% trans %}home{% endtrans %}</a></li>
+        <li><a href="{{ path('gestion_event_index') }}">{% trans %}calendar{% endtrans %}</a></li>
+        <li class="active">{% trans %}delete_event{% endtrans %}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 text-center">
+            <h2 class="text-danger">{% trans %}delete_event{% endtrans %}</h2>
+            {% trans %}delete_event.text{% endtrans %}
+            {{ form_start(form) }}
+            <button type="submit" class="btn btn-danger">
+                <span class="fa fa-trash"></span>
+                {% trans %}delete{% endtrans %}
+            </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

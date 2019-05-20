@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('build/css/baseStyles.css')}}">
     <link rel="stylesheet" href="{{asset('build/css/journal/baseStyles.css')}}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
 
@@ -22,6 +27,7 @@
 <body>
     <div id="mySidebar" class="sidebar">
         <a href="#">Index</a>
+        <a href="{{path('journal_event_index')}}">Calendar</a>
         <a class="logout-button" href="{{path('logout')}}">Logout</a>
 
     </div>
@@ -36,13 +42,20 @@
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+
+    <script type="text/javascript">
+        jQuery(".datetimepicker").datetimepicker(
+            { dateFormat: 'yy-mm-dd',
+              timeFormat: 'HH:mm' }
+            ).val();
+
+    </script>
     {% block javascripts %}
-    {% endblock %}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}" />
-    <script src="{{asset('js/journal/baseJS')}}" ></script>
+
 
     <script>
 
@@ -57,7 +70,7 @@
         function open() {
             mainSize = document.getElementById("main").style.width;
             elements = document.getElementsByClassName("box");
-            boxContent= document.getElementsByClassName("box-content");
+            boxContent = document.getElementsByClassName("box-content");
             inputs = document.getElementsByClassName("task-description");
             submits = document.getElementsByClassName("submit");
 
@@ -69,17 +82,17 @@
                 elements[i].style.backgroundColor = "#c0c0c0"
             }
             for (var i = 0; i < boxContent.length; i++) {
-                boxContent[i].style.overflow= "hidden";
-                inputs[i].disabled= true;
-                inputs[i].style.backgroundColor= "#dadada";
-                submits[i].disabled= true;
-                submits[i].style.backgroundColor= "#dadada";
+                boxContent[i].style.overflow = "hidden";
+                inputs[i].disabled = true;
+                inputs[i].style.backgroundColor = "#dadada";
+                submits[i].disabled = true;
+                submits[i].style.backgroundColor = "#dadada";
             }
 
         }
         function close() {
             elements = document.getElementsByClassName("box");
-            boxContent= document.getElementsByClassName("box-content");
+            boxContent = document.getElementsByClassName("box-content");
             inputs = document.getElementsByClassName("task-description");
             submits = document.getElementsByClassName("submit");
 
@@ -91,14 +104,15 @@
                 elements[i].style.backgroundColor = "#efefef";
             }
             for (var i = 0; i < boxContent.length; i++) {
-                boxContent[i].style.overflow= "scroll";
-                inputs[i].disabled= false;
-                inputs[i].style.backgroundColor= "white";
-                submits[i].disabled= false;
-                submits[i].style.backgroundColor= "white";
+                boxContent[i].style.overflow = "scroll";
+                inputs[i].disabled = false;
+                inputs[i].style.backgroundColor = "white";
+                submits[i].disabled = false;
+                submits[i].style.backgroundColor = "white";
             }
         }
     </script>
+    {% endblock %}
 </body>
 
 </html>

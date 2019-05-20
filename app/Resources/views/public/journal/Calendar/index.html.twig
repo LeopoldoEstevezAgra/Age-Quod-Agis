@@ -1,0 +1,114 @@
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-calendar/0.2.5/css/calendar.css">
+<link rel="stylesheet" href="{{ asset('build/css/journal/calendar.css') }}">
+{% endblock %}
+
+{% block heading_title %}
+{% trans %}calendar{% endtrans %}
+{% endblock %}
+{% block heading_breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="#">{% trans %}Home{% endtrans %}</a></li>
+    <li class="active">{% trans %}Calendar{% endtrans %}</li>
+</ol>
+{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h2 class="panel-title pull-left">
+            {% trans %}Calendar{% endtrans %}
+        </h2>
+        <a href="{{ path('journal_event_new') }}" class="btn btn-xs btn-primary pull-right">
+            <i class="fa fa-plus"></i>
+            {% trans %}Create Event{% endtrans %}
+        </a>
+    </div>
+    <div class="panel-body">
+        <div class="clearfix">
+            <div class="text-center">
+                <div class="btn-group">
+                    <button class="btn btn-warning" data-calendar-view="year">{% trans %}Year{% endtrans %}</button>
+                    <button class="btn btn-warning active"
+                        data-calendar-view="month">{% trans %}Month{% endtrans %}</button>
+                    <button class="btn btn-warning" data-calendar-view="week">{% trans %}Week{% endtrans %}</button>
+                    <button class="btn btn-warning" data-calendar-view="day">{% trans %}Day{% endtrans %}</button>
+                </div>
+            </div>
+            <h1 id="calendar-title" class="pull-left"></h1>
+            <div class="pull-right" style="margin-top: 20px;">
+                <div class="form-inline">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" data-calendar-nav="prev"><span
+                                class="fa fa-chevron-left"></span></button>
+                        <button class="btn btn-default"
+                            data-calendar-nav="today">{% trans %}Today{% endtrans %}</button>
+                        <button class="btn btn-primary" data-calendar-nav="next"><span
+                                class="fa fa-chevron-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="calendar"></div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="{{ asset('build/js/journal/event/calendar.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-calendar/0.2.5/js/calendar.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-calendar/0.2.5/js/language/es-ES.js"></script>
+<script type="text/javascript">
+    var $calendarTitle = $('#calendar-title');
+    var locale = "{{ app.request.locale == 'en' ? 'en-US' : 'es-ES' }}";
+
+    var calendar = $("#calendar").calendar({
+        language: 'en',
+        modal: "#events-modal",
+        modal_type: "ajax",
+        modal_title: function (event) {
+            $('#modal-edit-btn').attr('href', '/journal/event/' + event.id + '/edit');
+            $('#modal-delete-btn').attr('href', '/journal/event/' + event.id + '/delete');
+            return event.title
+        },
+        tmpl_path: "/calendar-tmpls/",
+        events_source: '/calendar/',
+        //display_week_numbers: false,
+        onAfterViewLoad: function (view) {
+            i
+            $calendarTitle.text(this.getTitle());
+            $('.btn-group button').removeClass('active');
+            $('button[data-calendar-view="' + view + '"]').addClass('active');
+        },
+        events_cache: true
+
+    });
+
+    $('.btn-group button[data-calendar-nav]').each(function () {
+        var $this = $(this);
+        $this.click(function () {
+            calendar.navigate($this.data('calendar-nav'));
+        });
+    });
+
+    $('.btn-group button[data-calendar-view]').each(function () {
+        var $this = $(this);
+        $this.click(function () {
+            calendar.view($this.data('calendar-view'));
+        });
+    });
+</script>
+{% endblock %}
