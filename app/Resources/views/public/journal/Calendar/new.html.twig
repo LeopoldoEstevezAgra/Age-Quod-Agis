@@ -8,13 +8,13 @@
 {% endblock %}
 
 {% block heading_title %}
-{% trans %}new_event{% endtrans %}
+{% trans %}New Event{% endtrans %}
 {% endblock %}
 {% block heading_breadcrumbs %}
 <ol class="breadcrumb">
     <li><a href="#">{% trans %}Home{% endtrans %}</a></li>
     <li><a href="{{ path('journal_event_index') }}">{% trans %}Calendar{% endtrans %}</a></li>
-    <li class="active">{% trans %}New event{% endtrans %}</li>
+    <li class="active">{% trans %}New Event{% endtrans %}</li>
 </ol>
 {% endblock %}
 
@@ -24,7 +24,7 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h2 class="panel-title">{% trans %}Nuevo evento{% endtrans %}</h2>
+                <h2 class="panel-title">{% trans %}New Event{% endtrans %}</h2>
             </div>
             <div class="panel-body">
                 {{ form_row(form.title) }}
@@ -44,9 +44,6 @@
                 <div class="hr-line-dashed"></div>
                 {{ form_label(form.color) }}
                 {{ form_row(form.color, {'attr': {'class':'sr-only'}, 'label_attr': {'class':'sr-only'}}) }}
-
-                <input class="datetimepicker">
-
 
                 <ul id="list-colors" class="list-inline list-colors">
                     <li class="active" style="display: inline-block">
@@ -68,7 +65,7 @@
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">
                         <i class="fa fa-floppy-o"></i>
-                        {% trans %}save{% endtrans %}
+                        {% trans %}Save{% endtrans %}
                     </button>
                 </div>
 

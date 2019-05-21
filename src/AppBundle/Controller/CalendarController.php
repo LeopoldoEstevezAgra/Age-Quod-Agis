@@ -145,8 +145,6 @@ class CalendarController extends Controller
 
 		$editForm = $this->createForm('AppBundle\Form\EventType', $event, array(
 			'user' => $this->getUser()->getId(),
-			'proyectosTutor' => null,
-			'color' => ['yellow']
 		));
 
 		$editForm->handleRequest($request);
@@ -174,7 +172,7 @@ class CalendarController extends Controller
 
 		}
 
-		return $this->render('public/journal/calendar/edit.html.twig', array(
+		return $this->render('public/journal/Calendar/edit.html.twig', array(
 			'event' => $event,
 			'form' => $editForm->createView(),
 			//  'aclProjectSourceJson' => json_encode($projects),

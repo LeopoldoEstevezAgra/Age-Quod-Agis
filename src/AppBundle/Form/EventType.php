@@ -41,10 +41,10 @@ class EventType extends AbstractType
 
         $builder
             ->add('title', null, [
-                'label' => 'Título',
+                'label' => 'Title',
             ])
             ->add('description', null, [
-                'label' => 'Descripción',
+                'label' => 'Description',
             ]);
              $builder
             ->add('starts', DateTimeType::class, [
@@ -60,7 +60,7 @@ class EventType extends AbstractType
             //     'label' => 'Todo el día ',
             // ])
             ->add('ends', DateTimeType::class, [
-                'label' => 'Fecha de finalización ( Opcional )',
+                'label' => 'Finish date',
                 'widget' => 'single_text',
                 'format' => 'yyyy/MM/dd HH:mm',
                 'attr' => [
@@ -69,11 +69,11 @@ class EventType extends AbstractType
                 ]
             ])
             ->add('venue', null, [
-                'label' => 'Localización',
+                'label' => 'Venue',
                 'required' => false,
             ])
             ->add('color', ChoiceType::class, array(
-                'label' => 'color',
+                'label' => 'Color',
                 'expanded' => true,
                 'choices' => Event::getColors(),
                 'choice_label' => function ($value) {
