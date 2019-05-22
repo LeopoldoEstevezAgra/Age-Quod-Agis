@@ -212,7 +212,7 @@ class CalendarController extends Controller
 			return $this->redirectToRoute('journal_event_index');
 		}
 
-		return $this->render('public/journal/calendar/delete.html.twig', array(
+		return $this->render('public/journal/Calendar/delete.html.twig', array(
 			'event' => $event,
 			'form' => $form->createView(),
 		));

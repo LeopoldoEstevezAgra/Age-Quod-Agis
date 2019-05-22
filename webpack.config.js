@@ -28,6 +28,7 @@ Encore
 
     //SCCS
     .addStyleEntry('css/app', './assets/css/app.scss')
+    .addStyleEntry('css/formInputs', './assets/css/formInputs.scss')
     .addStyleEntry('css/jquery-timepicker', './assets/css/jquery-ui-timepicker-addon.css')
     .addStyleEntry('css/baseStyles', './assets/css/baseStyles.scss')
     .addStyleEntry('css/journal/_variables_custom', './assets/css/journal/_variables_custom.scss')
