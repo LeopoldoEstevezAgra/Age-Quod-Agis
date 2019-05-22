@@ -1,0 +1,144 @@
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('build/css/journal/event/new_edit.css') }}">
+<link rel="stylesheet" href="{{ asset('build/css/journal/category/scrollable_typehead.css') }}">
+<link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
+{% endblock %}
+
+{% block heading_title %}
+{% trans %}Edit Event{% endtrans %}
+{% endblock %}
+{% block heading_breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="#">{% trans %}Home{% endtrans %}</a></li>
+    <li><a href="{{ path('journal_event_index') }}">{% trans %}Calendar{% endtrans %}</a></li>
+    <li class="active">{% trans %}Edit Event{% endtrans %}</li>
+</ol>
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{% trans %}Edit Event{% endtrans %}</h2>
+            </div>
+            <div class="panel-body">
+                {{ form_row(form.title) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.description, {'attr':{'rows': 10}}) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.starts) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.ends) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_row(form.venue) }}
+                <div class="hr-line-dashed"></div>
+                {{ form_label(form.color) }}
+                {{ form_row(form.color, {'attr': {'class':'sr-only'}, 'label_attr': {'class':'sr-only'}}) }}
+
+                <ul id="list-colors" class="list-inline list-colors">
+                    <li class="active" style="display: inline-block">
+                        <button data-color="" class="btn btn-xs bg-white">
+                        </button>
+                    </li>
+                    {% for color in event.colors %}
+                    <li style="display: inline-block">
+                        <button data-color="{{ color }}" class="btn btn-xs bg-{{ color }}">
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                {#                     <div class="hr-line-dashed"></div>
+                    {{ include(':gestion/event:acl.form.html.twig') }} #}
+
+                <div class="hr-line-dashed"></div>
+                <div class="text-center">
+                    <a href="{{ path('journal_event_delete', {'id': event.id}) }}" class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i>
+                        {% trans %}delete{% endtrans %}
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o"></i>
+                        {% trans %}save{% endtrans %}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_widget(form) }}
+{{ form_end(form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+    $(document).ready(function () {
+        $('input[name="event[color]"]:checked').each(function () {
+            $('#list-colors').find('li').removeClass('active');
+            $('#list-colors').find('button[data-color="' + $(this).val() + '"]').parent().addClass('active');
+        });
+        $('#list-colors').find('button').click(function (e) {
+            e.preventDefault();
+            var color = $(this).data('color');
+            $(this).closest('ul').find('li').removeClass('active');
+            $(this).closest('li').addClass('active');
+
+            $('input[name="event[color]"][value="' + color + '"]').prop('checked', true);
+
+        });
+    });
+
+</script>
+
+{# <script src="{{ asset('js/bootstrap3-typeahead.js'|asset_version) }}"></script>
+    <script src="{{ asset('js/dashboard/acl/sid_typeahead.js'|asset_version) }}"></script>
+    <script src="{{ asset('js/dashboard/acl/add_rol_ace.js'|asset_version) }}"></script>
+
+    <script type="text/javascript">
+        var roleSource = [
+            { id: "ROLE_PARTICIPANT", name: '{{ "participant"|trans }}' },
+            { id: "ROLE_PRESIDENCY", name: '{{ "presidency_member"|trans }}' },
+            { id: "ROLE_EXECUTIVE", name: '{{ "executive_committee_member"|trans }}' },
+            { id: "ROLE_MANAGER", name: '{{ "manager"|trans }}' },
+            { id: "ROLE_DIRECTOR", name: '{{ "project_director"|trans }}' },
+            { id: "ROLE_COORDINATOR", name: '{{ "coordinator"|trans }}' },
+            { id: "ROLE_COMMUNICATION", name: '{{ "communication"|trans }}' },
+            { id: "ROLE_TRAINING", name: '{{ "training"|trans }}' },
+            { id: "ROLE_EVALUATOR", name: '{{ "evaluator"|trans }}' },
+            { id: "ROLE_MENTOR", name: '{{ "mentor"|trans }}' }
+        ];
+
+        var projectSource = {{ aclProjectSourceJson| raw }};
+        var userSource = {{ aclUserSourceJson| raw }};
+
+        initAddAces(roleSource, projectSource, userSource);
+
+        $('#roles-acl-list').find('li').each(function () {
+            var $textInput = $(this).find('input[type="text"]');
+            var $hiddenInput = $(this).find('input[type="text"]');
+            initTypeahead($textInput, $hiddenInput, roleSource);
+            roleSource.forEach(function (element) {
+                if (element.id === $hiddenInput.val()) {
+                    $hiddenInput.val(element.name);
+                }
+            });
+        });
+        $('#projects-acl-list').find('li').each(function () {
+            initTypeahead($(this).find('input[type="text"]'), $(this).find('input[type="hidden"]'), projectSource);
+        });
+        $('#users-acl-list').find('li').each(function () {
+            initTypeahead($(this).find('input[type="text"]'), $(this).find('input[type="hidden"]'), userSource);
+        });
+
+    </script> #}
+{% endblock %}

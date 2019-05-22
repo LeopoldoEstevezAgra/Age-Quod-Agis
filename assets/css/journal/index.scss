@@ -1,0 +1,42 @@
+
+
+.box {
+    width: 40%;
+    margin-left: 2%;
+    margin-bottom: 20px;
+    min-height: 42em;
+    max-height: 42em;
+    padding: 0;
+    background: #efefef;
+    text-align: center;
+    -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 12px 12px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.box-content{
+    height: 93%;
+    overflow-y: auto;
+    margin-bottom: 0px;
+    
+}
+
+
+
+.task-description{
+    height: 40px;
+    margin: 0;
+    padding:0;
+    font-size: 25px;
+    border-radius: 5px;
+}
+
+.move-bottom{
+    bottom: 0;
+    position: absolute;
+}
+
+.submit{
+    border-radius: 5px;
+    background: #efefef
+}

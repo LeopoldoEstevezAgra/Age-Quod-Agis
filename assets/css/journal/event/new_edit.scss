@@ -1,0 +1,39 @@
+@import "../_variables_custom";
+
+.list-colors {
+  .btn {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    &.bg-white {
+      border: 1px solid $gray-alt;
+    }
+  }
+
+  li {
+    padding: 5px;
+
+    &.active {
+      padding: 3px;
+      border: 2px solid $blue-light;
+      border-radius: $border-radius-small;
+    }
+
+    &:hover {
+      padding: 3px;
+      border: 2px solid transparentize($blue-light, 0.5);
+      border-radius: $border-radius-small;
+    }
+  }
+
+}
+
+@media (min-width: $screen-md-min) {
+  .datetimepicker{
+      width: 220px;
+  }
+}
+
+.col-permission {
+  display: none;
+}

@@ -1,0 +1,40 @@
+{% extends 'public/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('build/css/front/index.css')}}">
+
+{% endblock %}
+{% block body %}
+<div id="intro" class="view hm-black-strong">
+
+    <div class="full-bg-img main-title">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="display-3 font-bold white-text mb-2 center"><b><i>Age quod ages</i></b></div>
+            </div>
+            {% if app.user %}
+            <div class="row center mg-top-30">
+                <a href="{{path('logout')}}" class="btn btn-default border-light-gray mg-right-30">
+                    <b>Log Out </b>
+                </a>
+            </div>
+
+            {% else %}
+            <div class="row center mg-top-30">
+                <a href="{{path('register')}}" class="btn btn-default bg-darkgray mg-right-30 border-radius-30">
+                    <b>Sign in</b>
+                </a>
+                <a href="{{path('login')}}" class="btn btn-default bg-darkgray border-radius-30">
+                    <b> Login</b>
+                </a>
+
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

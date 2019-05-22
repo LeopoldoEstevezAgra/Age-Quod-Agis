@@ -1,0 +1,48 @@
+{% extends "public/base.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('build/css/front/register.css')}}">
+
+{% endblock %}
+
+{% block title %}
+Sign in
+{% endblock title %}
+{% block body %}
+{{form_start(form)}}
+<h1 class="mt-4 mb-3 center">Sign in</h1>
+<label>
+    <p class="label-txt">USERNAME</p>
+    {{form_widget(form.username,{'attr':{'class':'input'}})}}
+    <div class="line-box">
+        <div class="line"></div>
+    </div>
+</label>
+<label>
+    <p class="label-txt">
+        EMAIL
+    </p>
+    {{form_widget(form.email,{'attr':{'class':'input'}})}}
+    <div class="line-box">
+        <div class="line"></div>
+    </div>
+</label>
+<label>
+    <p class="label-txt">PASSWORD</p>
+    {{form_widget(form.plainPassword.first,{'attr':{'class':'input'}})}}
+    <div class="line-box">
+        <div class="line"></div>
+    </div>
+</label>
+<label>
+    <p class="label-txt">REPEAT PASSWORD</p>
+    {{form_widget(form.plainPassword.second,{'attr':{'class':'input'}})}}
+    <div class="line-box">
+        <div class="line"></div>
+    </div>
+</label>
+{{form_widget(form.Submit)}}
+
+{{form_end(form)}}
+{% endblock %}
