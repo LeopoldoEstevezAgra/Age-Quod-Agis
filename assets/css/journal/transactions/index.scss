@@ -1,0 +1,17 @@
+
+.box-content{
+	height: 87%;
+}
+
+@media (max-width: 767px) {
+	.content{
+		height: 78%;
+	}
+	input{
+		width: 100%
+	}
+	.butto{
+		height: 40px;
+		width:150px
+	}
+}

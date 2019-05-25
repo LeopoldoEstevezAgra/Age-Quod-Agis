@@ -1,0 +1,47 @@
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
+
+{% endblock %}
+
+{% block heading_title %}
+{% trans %}Edit transaction{% endtrans %}
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">{% trans %}Edit Transaction{% endtrans %}</h2>
+			</div>
+			<div class="panel-body">
+				{{ form_row(form.reason) }}
+				<br>
+				{{ form_row(form.amount) }}
+				<br>
+				<div class="text-center">
+					<a href="{{ path('journal_transaction_delete', {'id': transaction.id}) }}" class="btn btn-danger">
+						<i class="fa fa-trash-o"></i>
+						{% trans %}Delete{% endtrans %}
+					</a>
+					<button type="submit" class="btn btn-primary">
+						<i class="fa fa-floppy-o"></i>
+						{% trans %}Save{% endtrans %}
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{% endblock %}

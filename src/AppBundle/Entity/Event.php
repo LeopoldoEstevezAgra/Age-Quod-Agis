@@ -72,11 +72,10 @@ class Event
 	private $venue;
 	
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="dayTasks")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="events")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="id")
      */
     private $user;
-
 
     public static function getColors()
     {

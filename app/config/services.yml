@@ -38,3 +38,9 @@ services:
         arguments: ["@security.authorization_checker"]
         tags:
             - { name: form.type }
+     
+    app.form.type.transaction:
+        class: AppBundle\Form\TransactionType
+        arguments: ["@security.authorization_checker"]
+        tags:
+            - { name: form.type }

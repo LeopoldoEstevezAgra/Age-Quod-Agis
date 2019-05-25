@@ -1,0 +1,80 @@
+{% extends 'public/journal/base.html.twig' %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
+<link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
+<link rel="stylesheet" href="{{ asset('build/css/journal/transactions/index.css') }}">
+
+{% endblock %}
+
+{% block heading_title %}
+{% trans %}Transactions{% endtrans %}
+{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+	<div name="box" class="col-10 box">
+		<div class="container-fluid height-95 content">
+			<div class="row mg-top-10">
+				<div class="col-6"><u>{% trans %}Income{% endtrans %}</u>
+					<div class="green-text">({{positiveTotal}})</div>
+				</div>
+				<div class="col-6"><u>{% trans %}Outcome{% endtrans %}</u>
+					<div class="red-text">({{negativeTotal}})</div>
+				</div>
+			</div>
+			<div class="box-content height-95 x-overflow-0">
+				<div class="row height-100 pd-10">
+					<div class="col-6" style="border-right:2px solid  rgb(117, 117, 117);height: 100%;">
+						<ul class="li-clean">
+							{% for transaction in transactions %}
+							{% if transaction.amount > 0 %}
+							<li>
+								+{{transaction.amount}}&#x2192;<i class="gray-text">{{transaction.reason}}</i>
+								<a class="f-right" href="{{path('journal_transaction_edit',{'id':transaction.id})}}">
+									<i class="fas fa-pen-square" aria-hidden="true"></i>
+								</a>
+
+
+							</li>
+							{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="col-6">
+						<ul class="li-clean">
+							{% for transaction in transactions %}
+							{% if transaction.amount < 0 %}
+							<li>
+								{{transaction.amount}}&#x2192;<i class="gray-text">{{transaction.reason}}</i>
+
+								<a class="f-right" href="{{path('journal_transaction_edit',{'id':transaction.id})}}">
+									<i class="fas fa-pen-square" aria-hidden="true"></i>
+								</a>
+							</li>
+							{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			{{form_start(form, { 'attr': {'class': 'mg-0'} })}}
+			<div class="row justify-content-center">
+				<div class="col-12 col-md-4">{{form_widget(form.amount)}}</div>
+				<div class="col-12 col-md-4">{{form_widget(form.reason)}}</div>
+				<button type="submit" class="butto col-md-1 submit fas fa-plus"></button>
+			</div>
+			{{form_end(form)}}
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{% endblock %}
