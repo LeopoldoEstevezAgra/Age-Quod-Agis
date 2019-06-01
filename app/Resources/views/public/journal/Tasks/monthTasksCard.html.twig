@@ -1,0 +1,32 @@
+<div name="box" class="col-10 col-lg-5 box">
+	<div class="box-content">
+		<ul style="list-style:none;float:left;font-size:20px;">
+			{% set currentDay = '' %}
+			{% for dTask in dayTasks %}
+			{% if currentDay != dTask.date|date('Y-m-d') %}
+
+			<p>{{dTask.date|date('Y-m-d')}}</p>
+			{% set currentDay = dTask.date|date('Y-m-d') %}
+			{% endif %}
+			<li>
+				<p></p>
+				<p style="text-align: left">---->{{dTask.description}}</p>
+			</li>
+
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		{{form_start(formDay)}}
+		<div class="container-fluid move-bottom">
+			<div class="row ">
+				{{form_widget(formDay.description,{'attr':{'class':'task-description col-10 '}})}}
+				{{form_widget(formDay.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
+
+			</div>
+
+		</div>
+		{{form_end(formDay)}}
+
+	</div>
+</div>

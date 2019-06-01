@@ -42,7 +42,7 @@ class JournalController extends Controller
         $em->flush();
 
         $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
-        $userDayTasks = $userDayTaskRepository->getThisMonthsTasks($this->getUser()->getId(),4);
+        $userDayTasks = $userDayTaskRepository->getThisMonthsTasks($this->getUser()->getId(),4,2019);
         $em->flush();
 
         if ($formMonth->isSubmitted() && $formMonth->isValid()) {
@@ -64,7 +64,7 @@ class JournalController extends Controller
             return $this->redirectToRoute('journalIndex');
         }
 
-        return $this->render('public/journal/index.html.twig', [
+        return $this->render('public/journal/Tasks/index.html.twig', [
             'formMonth' => $formMonth->createView(),
             'formDay' => $formDay->createView(),
             'monthTasks' => $userMonthTasks,
