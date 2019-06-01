@@ -28,4 +28,25 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
 
         }
     }
+
+	public function getThisMonthsEvents($user, $month, $year)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder('t');
+
+		try {
+			$qb->select('t')
+				->from('AppBundle:Event', 't')
+				->where($qb->expr()->eq('YEAR(t.starts)', ':year'))
+				->andWhere($qb->expr()->eq('MONTH(t.starts)', ':month'))
+				->andWhere($qb->expr()->eq('t.user', ':user'))
+				->setParameter(':year', $year)
+				->setParameter(':month', $month)
+				->setParameter(':user', $user);
+
+			return $qb->getQuery()->getResult();
+		} catch (\Doctrine\ORM\NoResultException $e) {
+
+			return null;
+		}
+	}
 }

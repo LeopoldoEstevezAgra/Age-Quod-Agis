@@ -10,43 +10,25 @@ namespace AppBundle\Repository;
  */
 class DayTaskRepository extends \Doctrine\ORM\EntityRepository
 {
-	function findByUser($user,$year,$month)
+	public function getThisMonthsTasks($user, $month, $year)
 	{
-
 		$qb = $this->getEntityManager()->createQueryBuilder('t');
 
-		try{
+		try {
 			$qb->select('t')
-			->from('AppBundle:DayTask','t')
-			->where($qb->expr()->eq('YEAR(t.dateAt)',':year'))
-			->andWhere($qb->expr()->eq('MONTH(t.dateAt)',':month'))
-			->andWhere($qb->expr()->eq('t.user',':user'))
-			->setParameter(':year',$year)
-			->setParameter(':month',$month)
-			->setParameter(':user',$user);
+				->from('AppBundle:DayTask', 't')
+				->where($qb->expr()->eq('YEAR(t.date)', ':year'))
+				->andWhere($qb->expr()->eq('MONTH(t.date)', ':month'))
+				->andWhere($qb->expr()->eq('t.user', ':user'))
+				->orderBy('t.date')
+				->setParameter(':year', $year)
+				->setParameter(':month', $month)
+				->setParameter(':user', $user);
 
 			return $qb->getQuery()->getResult();
-			}catch(\Doctrine\ORM\NoResultException $e){
+		} catch (\Doctrine\ORM\NoResultException $e) {
 
-					return null;
-		}	
-	}
-	public function getThisMonthsTasks($user, $month,$year)
-	{
-
-		$conn = $this->getEntityManager()
-            ->getConnection();
-
-		$sql = " 
-		select * from day_tasks where user_id = ? and month(date) = ?
-    ";
-        $stmt = $conn->prepare($sql);
-
-		$stmt->bindValue(1, $user);
-		$stmt->bindValue(2, $month);
-
-		$stmt->execute();
-
-		return $stmt->fetchAll();
+			return null;
+		}
 	}
 }
