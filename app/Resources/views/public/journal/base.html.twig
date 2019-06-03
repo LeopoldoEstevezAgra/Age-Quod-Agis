@@ -26,8 +26,9 @@
 
 <body>
     <div id="mySidebar" class="sidebar">
-        <a href="#">Index</a>
+        <a href="{{path('journalIndex')}}">Index</a>
         <a href="{{path('journal_event_index')}}">Calendar</a>
+        <a href="{{path('journal_transactions_index')}}">Wallet</a>
         <a class="logout-button" href="{{path('logout')}}">Logout</a>
 
     </div>
@@ -111,11 +112,11 @@
             document.body.style.backgroundColor = "#e7e7e7";
 
             for (var i = 0; i < textAreas.length; i++) {
-                textAreas[i].disabled = true;
+                textAreas[i].disabled = false;
                 textAreas[i].style.backgroundColor = "white";
             }
             for (var i = 0; i < inputs.length; i++) {
-                inputs[i].disabled = true;
+                inputs[i].disabled = false;
                 inputs[i].style.backgroundColor = "white";
             }
             for (var i = 0; i < elements.length; i++) {

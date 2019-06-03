@@ -1,0 +1,42 @@
+<div name="box" class="col-10 col-lg-5 box">
+	<div class="box-content">
+		<ul style="list-style:none;float:left;font-size:20px;" class="width-100">
+			{% for mTask in monthTasks %}
+			<br>
+			{% if mTask.finished == true %}
+			<div class="width-100" style="text-align: left">&#x2192;<strike>{{mTask.description}}</strike>
+
+				<a href="{{path('journal_mtask_resume',{'id':mTask.id})}}">
+					<i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+				</a>
+				<a href="{{path('journal_mtask_delete',{'id':mTask.id})}}">
+					<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+				</a>
+			</div>
+			{% else %}
+			<div class="width-100" style="text-align: left">&#x2192;{{mTask.description}}
+				<a href="{{path('journal_mtask_finish',{'id':mTask.id})}}">
+					<i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+				</a>
+				<a href="{{path('journal_mtask_delete',{'id':mTask.id})}}">
+					<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+				</a>
+			</div>
+			{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		{{form_start(formMonth)}}
+		<div class="container-fluid move-bottom">
+			<div class="row ">
+				{{form_widget(formMonth.description,{'attr':{'class':'task-description col-10 '}})}}
+				{{form_widget(formMonth.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
+
+			</div>
+
+		</div>
+		{{form_end(formMonth)}}
+
+	</div>
+</div>

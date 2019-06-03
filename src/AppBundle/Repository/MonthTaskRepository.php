@@ -10,17 +10,25 @@ namespace AppBundle\Repository;
  */
 class MonthTaskRepository extends \Doctrine\ORM\EntityRepository
 {
-	function findByUser($user){
-		$qb = $this->createQueryBuilder('t');
-		$qb
-			->join('t.user','user')
-			->where($qb->expr()->eq('user.id',':userid'))
-			->setParameter(':userid',$user);
+	public function getThisMonthsTasks($user, $month, $year)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder('t');
 
 		try {
-		} catch (\Throwable $th) {
+			$qb->select('t')
+				->from('AppBundle:MonthTask', 't')
+				->where($qb->expr()->eq('YEAR(t.date)', ':year'))
+				->andWhere($qb->expr()->eq('MONTH(t.date)', ':month'))
+				->andWhere($qb->expr()->eq('t.user', ':user'))
+				->orderBy('t.date')
+				->setParameter(':year', $year)
+				->setParameter(':month', $month)
+				->setParameter(':user', $user);
+
+			return $qb->getQuery()->getResult();
+		} catch (\Doctrine\ORM\NoResultException $e) {
+
+			return null;
 		}
-		$query = $qb->getQuery();
-		return $query->getResult();
 	}
 }

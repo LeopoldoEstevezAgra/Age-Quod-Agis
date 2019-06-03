@@ -46,6 +46,8 @@ Encore
     .addStyleEntry('css/journal/category/scrollable_typehead', './assets/css/journal/category/scrollable_typehead.scss')
     .addStyleEntry('css/journal/event/new_edit', './assets/css/journal/event/new_edit.scss')
 
+    .addStyleEntry('css/journal/transactions/index', './assets/css/journal/transactions/index.scss')
+
     //JS
 
     .addEntry('js/app', './assets/js/app.js')
