@@ -1,0 +1,48 @@
+
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('build/css/journal/event/new_edit.css') }}">
+<link rel="stylesheet" href="{{ asset('build/css/journal/category/scrollable_typehead.css') }}">
+<link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
+
+{% endblock %}
+
+{% block heading_title %}
+{% trans %}New Goal{% endtrans %}
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+
+<div class="row">
+	<div class="col-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+                <h2 class="panel-title">{% trans %}New goal{% endtrans %}</h2>
+			</div>
+
+            <div class="panel-body">
+                {{ form_row(form.title) }}
+                <hr>
+
+                {{ form_row(form.description, {'attr':{'rows': 5}}) }}
+                <hr>
+                
+                {{ form_row(form.date) }}
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o"></i>
+                        {% trans %}Save{% endtrans %}
+                    </button>
+                </div>
+
+
+            </div>
+		</div>
+	</div>
+</div>
+{{form_end(form)}}
+{% endblock %}

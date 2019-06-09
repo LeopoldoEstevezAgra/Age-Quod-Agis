@@ -40,11 +40,9 @@ class TasksController extends Controller
 
         $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
         $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks($this->getUser()->getId(), $currentMonth, $currentYear);
-        $em->flush();
 
         $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
         $userDayTasks = $userDayTaskRepository->getThisMonthsTasks($this->getUser()->getId(), $currentMonth, $currentYear);
-        $em->flush();
 
         if ($formMonth->isSubmitted() && $formMonth->isValid()) {
             $user = $this->getUser();

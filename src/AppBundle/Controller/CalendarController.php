@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\User;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,8 +9,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use AppBundle\Entity\Event;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use AppBundle\Entity\Event;
+use AppBundle\Entity\User;
 
 /**
  * Event controller.
@@ -81,10 +82,8 @@ class CalendarController extends Controller
 	public function newAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
-		// $this->denyAccessUnlessGranted('ROLE_MANAGE_EVENTS');
 
 		$event = new Event();
-		$em = $this->getDoctrine()->getManager();
 
 		$form = $this->createForm('AppBundle\Form\EventType', $event, array(
 			'user' => $this->getUser()->getId(),
