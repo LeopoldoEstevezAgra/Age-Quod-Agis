@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Goal
@@ -50,10 +51,22 @@ class Goal
     private $complete=false;
 
     /**
+     * @ORM\OneToMany(targetEntity="Subgoal", mappedBy="goal")
+     */
+    private $subgoals;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="goals")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="id")
      */
     private $user;
+
+
+    public function __construct()
+    {
+        $this->subgoals= new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -184,4 +197,39 @@ class Goal
     {
         return $this->user;
     }
+
+    /**
+     * Add subgoal 
+     *
+     * @param \AppBundle\Entity\subGoal $goal
+     *
+     * @return User
+     */
+    public function addGoal(\AppBundle\Entity\Subgoal $subgoal)
+    {
+        $this->subgoals[] = $subgoal;
+
+        return $this;
+    }
+
+    /**
+     * Remove subgoals 
+     *
+     * @param \AppBundle\Entity\subgoals $subgoal
+     */
+    public function removeGoal(\AppBundle\Entity\Subgoal $subgoal)
+    {
+        $this->subgoals->removeElement($subgoal);
+    }
+
+    /**
+     * Get goals 
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubgoals()
+    {
+        return $this->subgoals;
+    }
+
 }

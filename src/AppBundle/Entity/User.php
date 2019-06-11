@@ -340,10 +340,11 @@ class User implements UserInterface, \Serializable
     {
         return $this->transactions;
     }
-/**
+
+    /**
      * Add goal 
      *
-     * @param \AppBundle\Entity\Goal $goa
+     * @param \AppBundle\Entity\Goal $goal
      *
      * @return User
      */

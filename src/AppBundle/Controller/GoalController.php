@@ -30,9 +30,25 @@ class GoalController extends Controller
 		$goalRepository = $this->getDoctrine()->getRepository(Goal::class);
 
 		$currentMonth = (new \DateTime())->format('m');
-		$currentYear = (new \DateTime())->format('Y');
+        $currentYear = (new \DateTime())->format('Y');
 
-		$goals = $goalRepository->findGoalByUserAndMonth($currentMonth, $currentYear, $this->getUser()->getId());
+        $goals = $goalRepository->findGoalByUserAndMonth($currentMonth, $currentYear, $this->getUser()->getId());
+
+        $temCounter = 0;
+        foreach($goals as $goal){
+            if($goal->getSubgoals() == null){
+                foreach($goal->getSubgoals() as $subgoal){
+                    if($subgoal->getComplete()==false){
+                        $temCounter++;
+                    }
+                }
+                if($temCounter==0){
+                    $goal->setComplete(true);
+                }
+                $temCounter = 0;
+            }
+        }
+
 
 		return $this->render('public/journal/goals/index.html.twig', array(
 			'goals' => $goals,
