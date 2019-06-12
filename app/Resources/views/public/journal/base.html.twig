@@ -32,6 +32,11 @@
         <a href="{{path('journal_transactions_index')}}">Wallet</a>
 
         <a class="logout-button" href="{{path('journal_bug_new')}}">Bug report</a>
+
+        {% if is_granted(['ROLE_ADMIN']) %}
+            <a class="logout-button" href="{{path('journal_bug_index')}}">Bug report index</a>
+        {% endif %}
+
         <a class="logout-button" href="{{path('logout')}}">Logout</a>
 
     </div>
