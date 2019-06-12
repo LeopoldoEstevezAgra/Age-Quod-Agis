@@ -1,0 +1,97 @@
+{% extends 'public/journal/base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
+
+{% endblock %}
+
+{% block heading_title %}
+    {% trans %}Goals{% endtrans %}
+{% endblock %}
+
+{% block body %}
+
+    <div name="box" class="col-12 box" style="width:100%;margin-left:0;">
+        <div class="container-fluid height-95">
+            <div class="row">
+                <div class="col-10 font-20 mg-top-10">
+                    <u>{% trans %}Goals{% endtrans %}</u>
+                </div>
+                <div class="col-2 mg-top-10">
+                    <a href="{{path('journal_goal_new')}}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <div class="width-100">
+                <ul class="width-100 li-clean f-left mg-top-30">
+                    {% for goal in goals %}
+                        <li class="width-100 f-left pd-left-15 font-20" style="text-align: left">
+                            {% if goal.complete == true %}
+                                &#x2192;<strike> {{goal.title}}</strike>
+                            {% else %}
+                                &#x2192;{{goal.title}}
+                            {% endif %}
+                            <a class="f-right mg-right-10 font-20" href="{{path('journal_goal_delete',{'id':goal.id})}}">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </a>
+                            <a class="f-right mg-right-10 font-20" href="{{path('journal_goal_edit',{'id':goal.id})}}">
+                                <i class="fas fa-pen-square" aria-hidden="true"></i>
+                            </a>
+                            <a class="f-right mg-right-10 font-20" href="{{path('journal_subgoal_index',{'id':goal.id})}}">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </a>
+                            {% if goal.complete == true %}
+                                <a class="f-right mg-right-10 font-20" href="{{path('journal_goal_uncomplete',{'id':goal.id})}}">
+                                    <i class="far fa-check-square" aria-hidden="true"></i>
+                                </a>
+                            {% elseif goal.complete == false or goal.complete == null %}
+                                <a class="f-right mg-right-10 font-20" href="{{path('journal_goal_complete',{'id':goal.id})}}">
+                                    <i class="far fa-square" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+                            {% for subgoal in goal.subgoals %}
+                                <li style = "margin-left:40px"">
+                                    {% if subgoal.complete == true %}
+                                        <div class="width-100" style="text-align: left">&#x2192;<strike>{{subgoal.title}}</strike>
+                                            <a href="{{path('journal_subgoal_ongoal_resume',{'id':subgoal.id})}}">
+                                                <i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                            </a>
+                                            <a href="{{path('journal_subgoal_ongoal_delete',{'id':subgoal.id})}}">
+                                                <i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                            </a>
+                                        </div>
+                                    {% else %}
+                                        <div class="width-100" style="text-align: left">&#x2192;{{subgoal.title}}
+                                            <a href="{{path('journal_subgoal_ongoal_finish',{'id':subgoal.id})}}">
+                                                <i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                            </a>
+                                            <a href="{{path('journal_subgoal_ongoal_delete',{'id':subgoal.id})}}">
+                                                <i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                </li>
+
+
+
+                            {% endfor %}
+                        </li>
+                        <br>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

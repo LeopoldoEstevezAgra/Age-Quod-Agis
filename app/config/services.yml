@@ -44,3 +44,9 @@ services:
         arguments: ["@security.authorization_checker"]
         tags:
             - { name: form.type }
+
+    app.form.type.goal:
+        class: AppBundle\Form\GoalType
+        arguments: ["@security.authorization_checker"]
+        tags:
+            - { name: form.type }
