@@ -31,7 +31,7 @@
         <a href="{{path('journal_event_index')}}">Calendar</a>
         <a href="{{path('journal_transactions_index')}}">Wallet</a>
 
-        <a class="logout-button" href="#">Bug report</a>
+        <a class="logout-button" href="{{path('journal_bug_new')}}">Bug report</a>
         <a class="logout-button" href="{{path('logout')}}">Logout</a>
 
     </div>
@@ -78,11 +78,17 @@
             inputs = document.getElementsByTagName("input");
             textAreas= document.getElementsByTagName("textarea");
             submits = document.getElementsByClassName("submit");
+            buttons = document.getElementsByTagName("button");
 
             document.getElementById("mySidebar").style.width = "250px";
             document.getElementById("myBtn").style.marginLeft = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            
 
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+            }
+            document.getElementById("myBtn").disabled=false; 
             for (var i = 0; i < textAreas.length; i++) {
                 textAreas[i].disabled = true;
                 textAreas[i].style.backgroundColor = "#dadada";
@@ -107,8 +113,7 @@
             inputs = document.getElementsByTagName("input");
             textAreas= document.getElementsByTagName("textarea");
             submits = document.getElementsByClassName("submit");
-
-            
+            buttons = document.getElementsByTagName("button");
 
             document.getElementById("mySidebar").style.width = "0";
             document.getElementById("myBtn").style.marginLeft = "0";
@@ -129,6 +134,9 @@
                 boxContent[i].style.overflow = "scroll";
                 submits[i].disabled = false;
                 submits[i].style.backgroundColor = "white";
+            }
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = false;
             }
         }
     </script>

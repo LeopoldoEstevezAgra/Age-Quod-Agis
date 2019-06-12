@@ -8,10 +8,26 @@
 
 {% block body %}
 {{ form_start(form) }}
+{{form_row(form.title)}}
+<div style="width:50%">
+{{form_row(form.description)}}
+</div>
+{{form_label(form.screen)}}
+<br>
+{{form_widget(form.screen)}}
+<br>
+{{form_widget(form.imageFile)}}
+<br>
+
+<button type="submit" class="btn btn-primary mg-top-30">
+    {% trans %}Send{% endtrans %}
+    <i class="fas fa-arrow-circle-right"></i>
+</button>
 {{ form_end(form) }}
+
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
 
 {% endblock %}

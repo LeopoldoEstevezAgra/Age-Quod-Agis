@@ -75,9 +75,9 @@ swiftmailer:
 vich_uploader:
     db_driver: orm 
     mappings:
-        product_image:
+        bug_image:
             uri_prefix: /images/bugs
-            upload_destination: '%kernel.project_dir%/public/images/bugs'
+            upload_destination: '%kernel.project_dir%/web/images/bugs'
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true

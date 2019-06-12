@@ -69,7 +69,7 @@ class Bug
     private $imageName;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      *
      * @var integer
      */

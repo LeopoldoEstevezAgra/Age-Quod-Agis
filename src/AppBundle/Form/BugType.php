@@ -7,6 +7,14 @@ use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class BugType extends AbstractType
 {
@@ -20,15 +28,14 @@ class BugType extends AbstractType
             ->add('title',TextType::class , [
                 'label' => 'Title',
             ])
-            ->add('description',TextType::class, [
+            ->add('description',TextareaType::class, [
                 'label' => 'Description',
                 'attr'=> [
                     'rows' => 10
                 ]
             ])
-            ->add('screen',[
+            ->add('screen',ChoiceType::class,[
                 'label'=> 'Screen',
-                'expanded'=> true,
                 'required' => true,
                 'choices'=> [
                     'index' => 'index',
@@ -38,11 +45,10 @@ class BugType extends AbstractType
                 ]
 
             ])
-            ->add('genericFile', VichFileType::class, [
+            ->add('imageFile', VichImageType::class, [
+                'label'=>'Select an example image ( Optional )',
                 'required' => false,
                 'allow_delete' => true,
-                'download_uri' => true,
-                'download_label' => false
             ])
             ;
 

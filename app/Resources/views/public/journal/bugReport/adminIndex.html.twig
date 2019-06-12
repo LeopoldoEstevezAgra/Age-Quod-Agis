@@ -1,0 +1,48 @@
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
+
+    <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <table style="width:100%">
+        <tr>
+            <th>Img</th>
+            <th>Title</th> 
+            <th>Description</th>
+        </tr>
+
+        {% for bug in bugs %}
+            <tr>
+                <td class="text-center" style="width: 10px;">
+                    {% if bug.imageName %}
+                        <img style="" src="{{ vich_uploader_asset(bug, 'imageFile') }}" alt="" />
+                    {% endif %}
+                </td>
+                <td>
+                    {{ bug.title }}
+                </td>
+                <td>
+                    {{ bug.description }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
