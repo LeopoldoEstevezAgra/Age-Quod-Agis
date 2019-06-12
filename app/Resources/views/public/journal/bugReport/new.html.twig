@@ -1,0 +1,17 @@
+{% extends 'public/journal/base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
+
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{% endblock %}

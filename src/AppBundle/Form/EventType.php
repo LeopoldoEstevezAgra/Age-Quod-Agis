@@ -40,10 +40,10 @@ class EventType extends AbstractType
 
 
         $builder
-            ->add('title', null, [
+            ->add('title', TextType::class, [
                 'label' => 'Title',
             ])
-            ->add('description', null, [
+            ->add('description',TextAreaType , [
                 'label' => 'Description',
             ]);
              $builder
@@ -68,7 +68,7 @@ class EventType extends AbstractType
 
                 ]
             ])
-            ->add('venue', null, [
+            ->add('venue', TextType::class, [
                 'label' => 'Venue',
                 'required' => false,
             ])
