@@ -75,6 +75,11 @@ class User implements UserInterface, \Serializable
      */
     private $goals;
 
+    /**
+     * @ORM\OneToMany(targetEntity="DayUnit",mappedBy="user")
+     */
+    private $dayUnits;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -83,6 +88,7 @@ class User implements UserInterface, \Serializable
         $this->events= new ArrayCollection();
         $this->transactions= new ArrayCollection();
         $this->goals= new ArrayCollection();
+        $this->dayUnits= new ArrayCollection();
     }
 
     public function getUsername()
@@ -373,5 +379,39 @@ class User implements UserInterface, \Serializable
     public function getGoals()
     {
         return $this->goals;
+    }
+
+    /**
+     * Add dayUnit 
+     *
+     * @param \AppBundle\Entity\DayUnit $dayUnit
+     *
+     * @return User
+     */
+    public function addDayUnit(\AppBundle\Entity\DayUnit $dayUnit)
+    {
+        $this->dayUnits[] = $dayUnit;
+
+        return $this;
+    }
+
+    /**
+     * Remove dayUnit 
+     *
+     * @param \AppBundle\Entity\DayUnit $dayUnit
+     */
+    public function removeDayUnits(\AppBundle\Entity\DayUnits $dayUnit)
+    {
+        $this->dayUnits->removeElement($dayUnit);
+    }
+
+    /**
+     * Get dayUnits 
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDayUnits()
+    {
+        return $this->dayUnits;
     }
 }
