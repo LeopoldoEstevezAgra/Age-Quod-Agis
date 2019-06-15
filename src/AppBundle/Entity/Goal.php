@@ -51,7 +51,11 @@ class Goal
     private $complete=false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Subgoal", mappedBy="goal")
+     * @ORM\OneToMany(
+     *  targetEntity="Subgoal",
+     *  mappedBy="goal",
+     *  cascade = {"persist"},
+     *  orphanRemoval = true)
      */
     private $subgoals;
 

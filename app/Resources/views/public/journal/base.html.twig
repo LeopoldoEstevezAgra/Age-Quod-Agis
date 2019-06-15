@@ -44,7 +44,10 @@
     <div id="main">
         <button id="myBtn" class="openbtn " onclick="toggleNav()">☰</button>
         <div class="container-fluid height-100">
-            <h2 class="title-main">Lorem, ipsum.</h2>
+            <h2 class="title-main">
+                {% block sectionTitle %}
+                {% endblock %}
+            </h2>
             <hr>
             {% block body %}
             {% endblock %}

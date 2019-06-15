@@ -28,15 +28,10 @@
             </div>
             <div class="panel-body">
                 {{ form_row(form.title) }}
-                <div class="hr-line-dashed"></div>
                 {{ form_row(form.description, {'attr':{'rows': 10}}) }}
-                <div class="hr-line-dashed"></div>
                 {{ form_row(form.starts) }}
-                <div class="hr-line-dashed"></div>
                 {{ form_row(form.ends) }}
-                <div class="hr-line-dashed"></div>
                 {{ form_row(form.venue) }}
-                <div class="hr-line-dashed"></div>
                 {{ form_label(form.color) }}
                 {{ form_row(form.color, {'attr': {'class':'sr-only'}, 'label_attr': {'class':'sr-only'}}) }}
 
@@ -53,10 +48,7 @@
                     {% endfor %}
                 </ul>
 
-                {#                     <div class="hr-line-dashed"></div>
-                    {{ include(':gestion/event:acl.form.html.twig') }} #}
 
-                <div class="hr-line-dashed"></div>
                 <div class="text-center">
                     <a href="{{ path('journal_event_delete', {'id': event.id}) }}" class="btn btn-danger">
                         <i class="fa fa-trash-o"></i>
