@@ -34,7 +34,8 @@ class DayUnitType extends AbstractType
                     'Procrastination' => 'procrastination',
                     'Wasted time ' => 'wasted',
                     'Reading' => 'reading',
-                    'Social interaction' => 'social'
+                    'Social interaction' => 'social',
+                    'Unmarked' => 'unmarked',
 
                 )
             ))

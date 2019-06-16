@@ -33,4 +33,27 @@ class DayUnitRepository extends \Doctrine\ORM\EntityRepository
 		}
 
     }
+
+	public function getMonthUnits($user,$month,$year)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder('t');
+
+		try{
+			$qb->select('t')
+			->from('AppBundle:DayUnit','t')
+			->where($qb->expr()->eq('t.yearAt',':year'))
+			->andWhere($qb->expr()->eq('t.monthAt',':month'))
+			->andWhere($qb->expr()->eq('t.user',':user'))
+			->setParameter(':year',$year)
+			->setParameter(':month',$month)
+            ->setParameter(':user',$user)
+            ->orderBy('t.hourId');
+
+			return $qb->getQuery()->getResult();
+        }catch(\Doctrine\ORM\NoResultException $e){
+
+            return null;
+        }	
+
+	}
 }

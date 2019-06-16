@@ -33,21 +33,77 @@ class ActivityLogController extends Controller
         $dayUnit->setMonthAt($currentMonth);
         $dayUnit->setYearAt($currentYear);
 
+        $daysinmonth = cal_days_in_month(
+            CAL_GREGORIAN, 
+            $currentMonth,
+            $currentYear
+        );
+
+        
+        $maxHourMonth = 24 * $daysinmonth;
+        
         $form= $this->createForm(DayUnitType::class,$dayUnit);
         $dayUnitRepository= $this->getDoctrine()->getRepository(DayUnit::class);
+
+        $monthUnits = $dayUnitRepository->getMonthUnits(
+            $this->getUser()->getId(),
+            $currentMonth,
+            $currentYear
+        );
+
+        
         $maxHourId = $dayUnitRepository->getLastHourId(
             $this->getUser()->getId(),
             $currentMonth,
             $currentYear
         );
 
+
         $maxHourId = (int)$maxHourId[0]['hourId'];
+        $hoursAvailable = $maxHourMonth - $maxHourId;
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            if($dayUnit->getAmount() > $hoursAvailable){
+                $dayUnit->setAmount($hoursAvailable);
+            }
 
             $dayUnit->setUser($this->getUser());
+            switch($dayUnit->getType()){
+            case 'sleeping':
+                $dayUnit->setColor('gray');
+                break;
+            case 'general':
+                $dayUnit->setColor('green');
+                break;
+            case 'personalWork':
+                $dayUnit->setColor('lightblue');
+                break;
+            case 'study':
+                $dayUnit->setColor('blue');
+                break;
+            case 'work':
+                $dayUnit->setColor('navy');
+                break;
+            case 'procrastination':
+                $dayUnit->setColor('silver');
+                break;
+            case 'wasted':
+                $dayUnit->setColor('black');
+                break;
+            case 'reading':
+                $dayUnit->setColor('lime');
+                break;
+            case 'social':
+                $dayUnit->setColor('purple');
+                break;
+            case 'unmarked':
+                $dayUnit->setColor('#EFEFEF');
+                break;
+            default:
+                $dayUnit->setcolor('white');
+            }
 
             for($i = 1; $i <= $dayUnit->getAmount(); $i++){
                 $temp = clone $dayUnit;
@@ -64,6 +120,7 @@ class ActivityLogController extends Controller
             array(
                 'dayUnit'=>$dayUnit,
                 'form'=>$form->createView(),
+                'units' => $monthUnits
             ));
     }
 }

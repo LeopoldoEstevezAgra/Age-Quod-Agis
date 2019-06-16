@@ -57,6 +57,13 @@ class DayUnit
     private $yearAt;
 
     /**
+     * @var strig
+     *
+     * @ORM\Column(name="color",type="string",length=100)
+     */
+    private $color;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="dayUnits")
      * @ORM\JoinColumn(name="user_id",referencedColumnName="id")
      */
@@ -190,6 +197,31 @@ class DayUnit
     public function getYearAt()
     {
         return $this->yearAt;
+    }
+
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     *
+     * @return DayUnit
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
     }
 
     /**
