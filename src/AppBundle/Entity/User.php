@@ -400,7 +400,7 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\DayUnit $dayUnit
      */
-    public function removeDayUnits(\AppBundle\Entity\DayUnits $dayUnit)
+    public function removeDayUnits(\AppBundle\Entity\DayUnit $dayUnit)
     {
         $this->dayUnits->removeElement($dayUnit);
     }
