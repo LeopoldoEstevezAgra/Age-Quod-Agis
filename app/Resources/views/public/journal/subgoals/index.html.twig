@@ -1,8 +1,8 @@
 
 {% extends "public/journal/base.html.twig" %}
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
 
 {% endblock %}
 
@@ -12,50 +12,54 @@
 
 {% block body %}
 
-<div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-<div name="box" class="col-10 col-lg-5 box">
-	<div class="box-content">
-		<ul style="list-style:none;float:left;font-size:20px;" class="width-100">
-			{% for subgoal in goal.subgoals %}
-			<li>
-				{% if subgoal.complete == true %}
-				<div class="width-100" style="text-align: left">&#x2192;<strike>{{subgoal.title}}</strike>
-					<a href="{{path('journal_subgoal_resume',{'id':subgoal.id})}}">
-						<i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
-					</a>
-					<a href="{{path('journal_subgoal_delete',{'id':subgoal.id})}}">
-						<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
-					</a>
-				</div>
-				{% else %}
-				<div class="width-100" style="text-align: left">&#x2192;{{subgoal.title}}
-					<a href="{{path('journal_subgoal_finish',{'id':subgoal.id})}}">
-						<i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
-					</a>
-					<a href="{{path('journal_subgoal_delete',{'id':subgoal.id})}}">
-						<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
-					</a>
-				</div>
-				{% endif %}
-			</li>
+        <div name="box" class="col-10 col-lg-5 box">
+            <div class="box-content">
+                <ul style="list-style:none;float:left;font-size:20px;" class="width-100">
+                    {% for subgoal in goal.subgoals %}
+                        <li>
+                            {% if subgoal.complete == true %}
+                                <div class="width-100" style="text-align: left">&#x2192;<strike>{{subgoal.title}}</strike>
+                                    <a href="{{path('journal_subgoal_resume',{'id':subgoal.id})}}">
+                                        <i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                    </a>
+                                    <a href="{{path('journal_subgoal_delete',{'id':subgoal.id})}}">
+                                        <i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="width-100" style="text-align: left">&#x2192;{{subgoal.title}}
+                                    <a href="{{path('journal_subgoal_finish',{'id':subgoal.id})}}">
+                                        <i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                    </a>
+                                    <a href="{{path('journal_subgoal_delete',{'id':subgoal.id})}}">
+                                        <i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </li>
 
-			{% endfor %}
-		</ul>
-	</div>
-	<div>
-		{{form_start(form)}}
-		<div class="container-fluid move-bottom">
-			<div class="row ">
-				{{form_widget(form.title,{'attr':{'class':'task-description col-10 '}})}}
-				{{form_widget(form.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                {{form_start(form)}}
+                <div class="container-fluid move-bottom">
+                    <div class="row ">
+                        {{form_widget(form.title,{'attr':{'class':'task-description col-10 '}})}}
+                        {{form_widget(form.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
+                    </div>
 
-			</div>
+                </div>
+                {{form_end(form)}}
 
-		</div>
-		{{form_end(form)}}
-
-	</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-secondary center" >
+        <a class="link-none-style" href="{{path('journal_goal_index')}}" >
+            Back
+        </a>
+    </button>
 {% endblock %}

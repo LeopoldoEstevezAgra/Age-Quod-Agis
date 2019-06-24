@@ -6,6 +6,7 @@
     <title>{% block title %}Age quod agis{% endblock %}</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ asset('build/css/formInputs.css') }}">
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('build/css/baseStyles.css')}}">
     <link rel="stylesheet" href="{{asset('build/css/journal/baseStyles.css')}}">
@@ -89,6 +90,7 @@
             textAreas= document.getElementsByTagName("textarea");
             submits = document.getElementsByClassName("submit");
             buttons = document.getElementsByTagName("button");
+            selects = document.getElementsByTagName("select");
 
             document.getElementById("mySidebar").style.width = "250px";
             document.getElementById("myBtn").style.marginLeft = "250px";
@@ -115,6 +117,10 @@
                 submits[i].disabled = true;
                 submits[i].style.backgroundColor = "#dadada";
             }
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].disabled = true;
+                selects[i].style.backgroundColor = "#dadada";
+            }
 
         }
         function close() {
@@ -124,6 +130,7 @@
             textAreas= document.getElementsByTagName("textarea");
             submits = document.getElementsByClassName("submit");
             buttons = document.getElementsByTagName("button");
+            selects = document.getElementsByTagName("select");
 
             document.getElementById("mySidebar").style.width = "0";
             document.getElementById("myBtn").style.marginLeft = "0";
@@ -147,6 +154,10 @@
             }
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].disabled = false;
+            }
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].disabled = false;
+                selects[i].style.backgroundColor = "white";
             }
         }
     </script>
