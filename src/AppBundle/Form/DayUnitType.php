@@ -42,6 +42,9 @@ class DayUnitType extends AbstractType
             ->add('amount',IntegerType::class,array(
                 'label'=> false,
                 'required'=>true,
+                'attr'=>array(
+                    'placeholder'=>0 
+                )
             ))
             ->add('submit',SubmitType::class,[
                 'label'=>false
