@@ -68,6 +68,9 @@ class ActivityLogController extends Controller
             if($dayUnit->getAmount() > $hoursAvailable){
                 $dayUnit->setAmount($hoursAvailable);
             }
+            if($dayUnit->getAmount() == 0 ){
+                return $this->redirectToRoute('journal_activityLog_index');
+            }
 
             $dayUnit->setUser($this->getUser());
             switch($dayUnit->getType()){
