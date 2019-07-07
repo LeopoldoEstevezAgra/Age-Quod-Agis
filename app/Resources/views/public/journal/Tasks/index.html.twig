@@ -16,3 +16,31 @@
     {% include "public/journal/Tasks/monthTasksCard.html.twig" %}
 </div>
 {% endblock %}
+
+{% block javascripts %}
+   <script>
+       jQuery('#day_task_submit').click(function(){
+           inputVal = jQuery('#day_task_description').val()
+
+           jQuery.ajax({
+               url:'/index',
+               type:'post',
+               data:{
+                   inputVal
+               },
+               dataType: 'json',
+               async: true,
+               success: function(data, status){
+                   jQuery('#daybox').html(data['html'])
+               },
+               error: function(xhr, textStatus, errorThrown){
+                   console.error('Ajax request failed')
+               }
+
+           })
+
+       })
+
+   </script> 
+
+{% endblock %}
