@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -15,14 +16,19 @@ use AppBundle\Entity\DayTask;
 use AppBundle\Form\MonthTaskType;
 use AppBundle\Form\DayTaskType;
 
+
+
+
 class TasksController extends Controller
 {
     /**
      * @Route("index",name="journalIndex")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
     public function indexTasksAction(Request $request)
     {
+        $req = $request->request->get('day_task');
+
         $monthTask = new MonthTask();
         $dayTask = new DayTask();
         $formMonth = $this->createForm(MonthTaskType::class, $monthTask);
@@ -39,28 +45,55 @@ class TasksController extends Controller
 
 
         $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
-        $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks($this->getUser()->getId(), $currentMonth, $currentYear);
+
+        $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks(
+            $this->getUser()->getId(),
+            $currentMonth,
+            $currentYear);
 
         $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
-        $userDayTasks = $userDayTaskRepository->getThisMonthsTasks($this->getUser()->getId(), $currentMonth, $currentYear);
 
-        if ($formMonth->isSubmitted() && $formMonth->isValid()) {
-            $user = $this->getUser();
-            $monthTask->setUser($user);
+        $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+            $this->getUser()->getId(), 
+            $currentMonth, 
+            $currentYear);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($monthTask);
-            $em->flush();
-            return $this->redirectToRoute('journalIndex');
-        }
-        if ($formDay->isSubmitted() && $formDay->isValid()) {
-            $user = $this->getUser();
-            $dayTask->setUser($user);
+        if($request->isXmlHttpRequest()){
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($dayTask);
-            $em->flush();
-            return $this->redirectToRoute('journalIndex');
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/dayTasksCard.html.twig',
+                    [
+                        'formDay' => $formDay->createView(),
+                        'dayTasks' => $userDayTasks,
+                    ]
+                )
+            );
+
+
+//            $jsonData = 'test';
+
+            
+            return new JsonResponse($jsonData);
+        }else{
+            if ($formMonth->isSubmitted() && $formMonth->isValid()) {
+                $user = $this->getUser();
+                $monthTask->setUser($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($monthTask);
+                $em->flush();
+                return $this->redirectToRoute('journalIndex');
+            }
+            if ($formDay->isSubmitted() && $formDay->isValid()) {
+                $user = $this->getUser();
+                $dayTask->setUser($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($dayTask);
+                $em->flush();
+                return $this->redirectToRoute('journalIndex');
+            }
         }
 
         return $this->render('public/journal/Tasks/index.html.twig', [

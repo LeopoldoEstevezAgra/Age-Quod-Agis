@@ -19,7 +19,7 @@
 
 {% block javascripts %}
    <script>
-       jQuery('#day_task_submit').click(function(){
+       jQuery('#day_task_ajax').click(function(){
            inputVal = jQuery('#day_task_description').val()
 
            jQuery.ajax({
@@ -31,13 +31,15 @@
                dataType: 'json',
                async: true,
                success: function(data, status){
-                   jQuery('#daybox').html(data['html'])
+                   $('#daybox').html(data['html'])
+                   
                },
                error: function(xhr, textStatus, errorThrown){
                    console.error('Ajax request failed')
                }
 
            })
+           return false;
 
        })
 
