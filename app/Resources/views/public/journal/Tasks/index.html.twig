@@ -12,7 +12,10 @@
 {% block body %}
 
 <div class="row justify-content-center">
-    {% include "public/journal/Tasks/dayTasksCard.html.twig" %}
+
+    <div id="daybox" name="box" class="col-10 col-lg-5 box">
+        {% include "public/journal/Tasks/dayTasksCard.html.twig" %}
+    </div>
     {% include "public/journal/Tasks/monthTasksCard.html.twig" %}
 </div>
 {% endblock %}
@@ -32,14 +35,16 @@
                async: true,
                success: function(data, status){
                    $('#daybox').html(data['html'])
+                   inputVal = jQuery('#day_task_description').val('')
                    
                },
                error: function(xhr, textStatus, errorThrown){
                    console.error('Ajax request failed')
+
                }
 
            })
-           return false;
+            return false;
 
        })
 

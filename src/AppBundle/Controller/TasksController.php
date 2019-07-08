@@ -27,7 +27,8 @@ class TasksController extends Controller
      */
     public function indexTasksAction(Request $request)
     {
-        $req = $request->request->get('day_task');
+
+        $req = $request->request->get('day_task')['description'];
 
         $monthTask = new MonthTask();
         $dayTask = new DayTask();
@@ -59,6 +60,21 @@ class TasksController extends Controller
             $currentYear);
 
         if($request->isXmlHttpRequest()){
+                $dayTaskRequest= new DayTask();
+                $user = $this->getUser();
+                $dayTaskRequest->setUser($user);
+                $dayTaskRequest->setDescription(
+                    $request->request->get('inputVal')
+                );
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($dayTaskRequest);
+                $em->flush();
+
+                $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+                    $this->getUser()->getId(), 
+                    $currentMonth, 
+                    $currentYear);
 
             $jsonData = array(
                 'html' => $this->renderView(
