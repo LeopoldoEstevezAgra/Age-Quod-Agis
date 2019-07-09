@@ -26,6 +26,8 @@ security:
             logout:
                 path: /logout/
                 target: /
+            logout_on_user_change: true
+            access_denied_handler: AppBundle\Security\AccessDeniedHandler
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN   }
 
