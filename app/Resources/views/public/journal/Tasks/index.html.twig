@@ -22,7 +22,7 @@
 
 {% block javascripts %}
    <script>
-       jQuery('#day_task_ajax').click(function(){
+       jQuery(document).on('click','#day_task_ajax',function(e){
            inputVal = jQuery('#day_task_description').val()
 
            jQuery.ajax({
@@ -35,7 +35,7 @@
                async: true,
                success: function(data, status){
                    $('#daybox').html(data['html'])
-                   inputVal = jQuery('#day_task_description').val('')
+                  jQuery('#day_task_description').val('')
                    
                },
                error: function(xhr, textStatus, errorThrown){
