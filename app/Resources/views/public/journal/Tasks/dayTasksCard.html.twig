@@ -1,4 +1,3 @@
-<div name="box" class="col-10 col-lg-5 box">
     <h3>
         Day Tasks
     </h3>
@@ -43,12 +42,14 @@
 		<div class="container-fluid move-bottom">
 			<div class="row ">
 				{{form_widget(formDay.description,{'attr':{'class':'task-description col-10 '}})}}
-				{{form_widget(formDay.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
+                {#{{form_widget(formDay.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}#}
+                <a class="btn btn-primary" id="day_task_ajax">submit</a> 
 
 			</div>
 
 		</div>
-		{{form_end(formDay)}}
+        {{ form_end(formDay, {'render_rest': false}) }}
+        
+        {#{{form_end(formDay)}}#}
 
 	</div>
-</div>
