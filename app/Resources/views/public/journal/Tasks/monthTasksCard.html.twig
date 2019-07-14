@@ -1,4 +1,3 @@
-<div name="box" class="col-10 col-lg-5 box">
     <h3>
         Month Tasks
     </h3>
@@ -34,12 +33,12 @@
 		<div class="container-fluid move-bottom">
 			<div class="row ">
 				{{form_widget(formMonth.description,{'attr':{'class':'task-description col-10 '}})}}
-				{{form_widget(formMonth.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
-
+                <a class="col-2 asubmit " id="month_task_ajax">
+                    <i class="fas fa-plus submit-icon"></i>
+                </a> 
 			</div>
 
 		</div>
 		{{form_end(formMonth)}}
 
 	</div>
-</div>

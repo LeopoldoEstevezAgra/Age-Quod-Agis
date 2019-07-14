@@ -16,20 +16,24 @@
     <div id="daybox" name="box" class="col-10 col-lg-5 box">
         {% include "public/journal/Tasks/dayTasksCard.html.twig" %}
     </div>
-    {% include "public/journal/Tasks/monthTasksCard.html.twig" %}
+    <div id="monthbox" name="box" class="col-10 col-lg-5 box">
+        {% include "public/journal/Tasks/monthTasksCard.html.twig" %}
+    </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
    <script>
        jQuery(document).on('click','#day_task_ajax',function(e){
-           inputVal = jQuery('#day_task_description').val()
+           inputValDay = jQuery('#day_task_description').val()
+           dataOrigin = 'day'
 
            jQuery.ajax({
                url:'/index',
                type:'post',
                data:{
-                   inputVal
+                   inputValDay,
+                   dataOrigin
                },
                dataType: 'json',
                async: true,
@@ -48,6 +52,34 @@
 
        })
 
+       jQuery(document).on('click','#month_task_ajax',function(e){
+           inputValMonth = jQuery('#month_task_description').val()
+           dataOrigin = 'month'
+
+           jQuery.ajax({
+               url:'/index',
+               type:'post',
+               data:{
+                   inputValMonth,
+                   dataOrigin
+
+               },
+               dataType: 'json',
+               async: true,
+               success: function(data, status){
+                   $('#monthbox').html(data['html'])
+                  jQuery('#month_task_description').val('')
+                   
+               },
+               error: function(xhr, textStatus, errorThrown){
+                   console.error('Ajax request failed')
+
+               }
+
+           })
+            return false;
+
+       })
    </script> 
 
 {% endblock %}
