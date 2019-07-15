@@ -21,6 +21,8 @@ use AppBundle\Form\DayTaskType;
 
 class TasksController extends Controller
 {
+
+
     /**
      * @Route("index",name="journalIndex")
      * @Method({"GET","POST"})
@@ -31,8 +33,9 @@ class TasksController extends Controller
         $req = $request->request->get('day_task')['description'];
 
         $monthTask = new MonthTask();
-        $dayTask = new DayTask();
         $formMonth = $this->createForm(MonthTaskType::class, $monthTask);
+
+        $dayTask = new DayTask();
         $formDay = $this->createForm(DayTaskType::class, $dayTask);
 
         $currentMonth = (new \DateTime())->format('m');
@@ -160,6 +163,40 @@ class TasksController extends Controller
      */
     public function deleteDTaskAction(Request $request, DayTask $dayTask)
     {
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
+
+            $dayTask = new DayTask();
+            $formDay = $this->createForm(DayTaskType::class, $dayTask);
+
+
+            $id=$request->request->get('id');
+            $dayTask = $userDayTaskRepository->find($id);
+            $em->remove($dayTask);
+            $em->flush();
+
+            $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/dayTasksCard.html.twig',
+                    [
+                        'formDay' => $formDay->createView(),
+                        'dayTasks' => $userDayTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($dayTask);
