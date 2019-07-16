@@ -87,7 +87,6 @@
     <script>
         $(document).on('click','.deletedt',function(e){
             id = $(this).attr('id');
-            console.log(id);
 
             $.ajax({
                 url:'/'+id+'/deletedt',
@@ -100,7 +99,33 @@
                 async: true,
                 success: function(data, status){
                     $('#daybox').html(data['html'])
-                    jQuery('#day_task_description').val('')
+
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
+
+                }
+
+            })
+
+        })
+    </script> 
+
+    <script>
+        $(document).on('click','.deletemt',function(e){
+            id = $(this).attr('id');
+
+            $.ajax({
+                url:'/'+id+'/deletemt',
+                type:'post',
+                data:{
+                    id
+
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#monthbox').html(data['html'])
 
                 },
                 error: function(xhr, textStatus, errorThrown){

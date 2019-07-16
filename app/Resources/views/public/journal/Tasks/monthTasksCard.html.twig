@@ -11,7 +11,7 @@
 				<a href="{{path('journal_mtask_resume',{'id':mTask.id})}}">
 					<i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 				</a>
-				<a href="{{path('journal_mtask_delete',{'id':mTask.id})}}">
+				<a id="{{mTask.id}}"class="deletemt" href="#">
 					<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
 				</a>
 			</div>
@@ -20,7 +20,7 @@
 				<a href="{{path('journal_mtask_finish',{'id':mTask.id})}}">
 					<i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 				</a>
-				<a href="{{path('journal_mtask_delete',{'id':mTask.id})}}">
+                <a id="{{mTask.id}}"class="deletemt" href="#">
 					<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
 				</a>
 			</div>

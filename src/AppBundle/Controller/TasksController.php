@@ -156,6 +156,7 @@ class TasksController extends Controller
             'dayTasks' => $userDayTasks,
         ]);
     }
+
     /**
      * Deletes a DayTask entity.
      *
@@ -204,6 +205,7 @@ class TasksController extends Controller
         return $this->redirectToRoute('journalIndex');
     }
 
+
     /**
      * Deletes a MonthTask entity.
      *
@@ -211,7 +213,39 @@ class TasksController extends Controller
      */
     public function deleteMTaskAction(Request $request, MonthTask $monthTask)
     {
+        if($request->isXmlHttpRequest()){
 
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
+
+            $monthTask = new MonthTask();
+            $formMonth = $this->createForm(MonthTaskType::class, $monthTask);
+
+
+            $id=$request->request->get('id');
+            $monthTask = $userMonthTaskRepository->find($id);
+            $em->remove($monthTask);
+            $em->flush();
+
+            $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/monthTasksCard.html.twig',
+                    [
+                        'formMonth' => $formMonth->createView(),
+                        'monthTasks' => $userMonthTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($monthTask);
         $em->flush();
@@ -277,4 +311,5 @@ class TasksController extends Controller
 
         return $this->redirectToRoute('journalIndex');
     }
+
 }
