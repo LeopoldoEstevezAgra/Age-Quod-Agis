@@ -21,6 +21,8 @@ use AppBundle\Form\DayTaskType;
 
 class TasksController extends Controller
 {
+
+
     /**
      * @Route("index",name="journalIndex")
      * @Method({"GET","POST"})
@@ -31,8 +33,9 @@ class TasksController extends Controller
         $req = $request->request->get('day_task')['description'];
 
         $monthTask = new MonthTask();
-        $dayTask = new DayTask();
         $formMonth = $this->createForm(MonthTaskType::class, $monthTask);
+
+        $dayTask = new DayTask();
         $formDay = $this->createForm(DayTaskType::class, $dayTask);
 
         $currentMonth = (new \DateTime())->format('m');
@@ -60,36 +63,70 @@ class TasksController extends Controller
             $currentYear);
 
         if($request->isXmlHttpRequest()){
+            $dataOrigin = $request->request->get('dataOrigin');
+            if($dataOrigin == 'day'){
                 $dayTaskRequest= new DayTask();
                 $user = $this->getUser();
+                $dayDescription = $request->request->get('inputValDay');
                 $dayTaskRequest->setUser($user);
+
                 $dayTaskRequest->setDescription(
-                    $request->request->get('inputVal')
+                    $request->request->get('inputValDay')
                 );
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($dayTaskRequest);
-                $em->flush();
+                if($dayDescription != '' && $dayDescription != null){
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($dayTaskRequest);
+                    $em->flush();
 
-                $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+
+                    $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+                        $this->getUser()->getId(), 
+                        $currentMonth, 
+                        $currentYear);
+
+                    $jsonData = array(
+                        'html' => $this->renderView(
+                            'public/journal/Tasks/dayTasksCard.html.twig',
+                            [
+                                'formDay' => $formDay->createView(),
+                                'dayTasks' => $userDayTasks,
+                            ]
+                        )
+                    );
+                }
+            }elseif($dataOrigin == 'month'){
+                $monthTaskRequest= new MonthTask();
+                $user = $this->getUser();
+                $monthDescription = $request->request->get('inputValMonth');
+                $monthTaskRequest->setUser($user);
+
+                $monthTaskRequest->setDescription(
+                    $request->request->get('inputValMonth')
+                );
+
+                if($monthDescription != '' && $monthDescription != null){
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($monthTaskRequest);
+                    $em->flush();
+
+                }
+                $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks(
                     $this->getUser()->getId(), 
                     $currentMonth, 
                     $currentYear);
 
-            $jsonData = array(
-                'html' => $this->renderView(
-                    'public/journal/Tasks/dayTasksCard.html.twig',
-                    [
-                        'formDay' => $formDay->createView(),
-                        'dayTasks' => $userDayTasks,
-                    ]
-                )
-            );
+                $jsonData = array(
+                    'html' => $this->renderView(
+                        'public/journal/Tasks/monthTasksCard.html.twig',
+                        [
+                            'formMonth' => $formMonth->createView(),
+                            'monthTasks' => $userMonthTasks,
+                        ]
+                    )
+                );
+            }
 
-
-//            $jsonData = 'test';
-
-            
             return new JsonResponse($jsonData);
         }else{
             if ($formMonth->isSubmitted() && $formMonth->isValid()) {
@@ -119,6 +156,7 @@ class TasksController extends Controller
             'dayTasks' => $userDayTasks,
         ]);
     }
+
     /**
      * Deletes a DayTask entity.
      *
@@ -126,12 +164,47 @@ class TasksController extends Controller
      */
     public function deleteDTaskAction(Request $request, DayTask $dayTask)
     {
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
+
+            $dayTask = new DayTask();
+            $formDay = $this->createForm(DayTaskType::class, $dayTask);
+
+
+            $id=$request->request->get('id');
+            $dayTask = $userDayTaskRepository->find($id);
+            $em->remove($dayTask);
+            $em->flush();
+
+            $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/dayTasksCard.html.twig',
+                    [
+                        'formDay' => $formDay->createView(),
+                        'dayTasks' => $userDayTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($dayTask);
         $em->flush();
         return $this->redirectToRoute('journalIndex');
     }
+
 
     /**
      * Deletes a MonthTask entity.
@@ -140,7 +213,39 @@ class TasksController extends Controller
      */
     public function deleteMTaskAction(Request $request, MonthTask $monthTask)
     {
+        if($request->isXmlHttpRequest()){
 
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
+
+            $monthTask = new MonthTask();
+            $formMonth = $this->createForm(MonthTaskType::class, $monthTask);
+
+
+            $id=$request->request->get('id');
+            $monthTask = $userMonthTaskRepository->find($id);
+            $em->remove($monthTask);
+            $em->flush();
+
+            $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/monthTasksCard.html.twig',
+                    [
+                        'formMonth' => $formMonth->createView(),
+                        'monthTasks' => $userMonthTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($monthTask);
         $em->flush();
@@ -206,4 +311,5 @@ class TasksController extends Controller
 
         return $this->redirectToRoute('journalIndex');
     }
+
 }

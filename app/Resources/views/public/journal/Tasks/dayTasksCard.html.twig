@@ -4,6 +4,7 @@
 	<div class="box-content">
 		<ul style="list-style:none;float:left;font-size:20px;" class="width-100">
 			{% set currentDay = '' %}
+
 			{% for dTask in dayTasks %}
 
 			{% if currentDay != dTask.date|date('Y-m-d') %}
@@ -18,8 +19,8 @@
 					<a href="{{path('journal_dtask_resume',{'id':dTask.id})}}">
 						<i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
-					<a href="{{path('journal_dtask_delete',{'id':dTask.id})}}">
-						<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                    <a  href="#">
+						<i id="delete-{{dTask.id}}"class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
 				</div>
 				{% else %}
@@ -27,7 +28,7 @@
 					<a href="{{path('journal_dtask_finish',{'id':dTask.id})}}">
 						<i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
-					<a href="{{path('journal_dtask_delete',{'id':dTask.id})}}">
+                    <a id = "{{dTask.id}}" class="deletedt" href="#">
 						<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
 				</div>
@@ -42,8 +43,9 @@
 		<div class="container-fluid move-bottom">
 			<div class="row ">
 				{{form_widget(formDay.description,{'attr':{'class':'task-description col-10 '}})}}
-                {#{{form_widget(formDay.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}#}
-                <a class="btn btn-primary" id="day_task_ajax">submit</a> 
+                <a class="col-2 asubmit " id="day_task_ajax">
+                    <i class="fas fa-plus submit-icon"></i>
+                </a> 
 
 			</div>
 

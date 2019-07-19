@@ -33,9 +33,21 @@
     position: absolute;
 }
 
+.asubmit{
+    border: #a8a8a8 1px;
+    border-radius: 5px;
+    background: #efefef;
+    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);
+
+}
+
 .submit{
     border-radius: 5px;
     background: #efefef
+}
+
+.submit-icon{
+    margin-top:15%
 }
 .dropdown{
     border-radius: 5px;

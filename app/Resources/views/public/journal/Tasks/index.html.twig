@@ -1,7 +1,7 @@
 {% extends "public/journal/base.html.twig" %}
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
 
 {% endblock %}
 
@@ -11,43 +11,132 @@
 
 {% block body %}
 
-<div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-    <div id="daybox" name="box" class="col-10 col-lg-5 box">
-        {% include "public/journal/Tasks/dayTasksCard.html.twig" %}
+        <div id="daybox" name="box" class="col-10 col-lg-5 box">
+            {% include "public/journal/Tasks/dayTasksCard.html.twig" %}
+        </div>
+        <div id="monthbox" name="box" class="col-10 col-lg-5 box">
+            {% include "public/journal/Tasks/monthTasksCard.html.twig" %}
+        </div>
     </div>
-    {% include "public/journal/Tasks/monthTasksCard.html.twig" %}
-</div>
 {% endblock %}
 
 {% block javascripts %}
-   <script>
-       jQuery(document).on('click','#day_task_ajax',function(e){
-           inputVal = jQuery('#day_task_description').val()
+    {{parent()}}
+    <script>
+        $(document).on('click','#day_task_ajax',function(e){
+            inputValDay = $('#day_task_description').val()
+            dataOrigin = 'day'
 
-           jQuery.ajax({
-               url:'/index',
-               type:'post',
-               data:{
-                   inputVal
-               },
-               dataType: 'json',
-               async: true,
-               success: function(data, status){
-                   $('#daybox').html(data['html'])
-                  jQuery('#day_task_description').val('')
-                   
-               },
-               error: function(xhr, textStatus, errorThrown){
-                   console.error('Ajax request failed')
+            $.ajax({
+                url:'/index',
+                type:'post',
+                data:{
+                    inputValDay,
+                    dataOrigin
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#daybox').html(data['html'])
+                    jQuery('#day_task_description').val('')
 
-               }
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
 
-           })
+                }
+
+            })
             return false;
 
-       })
+        })
+    </script>
 
-   </script> 
+    <script>
+        $(document).on('click','#month_task_ajax',function(e){
+            inputValMonth = $('#month_task_description').val()
+            dataOrigin = 'month'
+
+            $.ajax({
+                url:'/index',
+                type:'post',
+                data:{
+                    inputValMonth,
+                    dataOrigin
+
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#monthbox').html(data['html'])
+                    jQuery('#month_task_description').val('')
+
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
+
+                }
+
+            })
+            return false;
+
+        })
+    </script>
+
+    <script>
+        $(document).on('click','.deletedt',function(e){
+            id = $(this).attr('id');
+
+            $.ajax({
+                url:'/'+id+'/deletedt',
+                type:'post',
+                data:{
+                    id
+
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#daybox').html(data['html'])
+
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
+
+                }
+
+            })
+
+        })
+    </script> 
+
+    <script>
+        $(document).on('click','.deletemt',function(e){
+            id = $(this).attr('id');
+
+            $.ajax({
+                url:'/'+id+'/deletemt',
+                type:'post',
+                data:{
+                    id
+
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#monthbox').html(data['html'])
+
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
+
+                }
+
+            })
+
+        })
+    </script> 
 
 {% endblock %}
