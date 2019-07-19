@@ -23,6 +23,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{parent()}}
     <script>
         $(document).on('click','#day_task_ajax',function(e){
             inputValDay = $('#day_task_description').val()
