@@ -36,15 +36,19 @@ class TransactionType extends AbstractType
                 'label' => 'Amount',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Amount'
-                ]
+                    'placeholder' => 'Amount',
+                    'class'=> 'width-100'
+                ],
+                
+
             ))
 
             ->add('reason', TextType::class, array(
                 'label' => 'Reason',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Reason'
+                    'placeholder' => 'Reason',
+                    'class'=> 'width-100'
                 ]
             ));
     }
