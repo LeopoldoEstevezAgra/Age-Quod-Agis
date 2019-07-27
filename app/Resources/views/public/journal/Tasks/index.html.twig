@@ -139,4 +139,31 @@
         })
     </script> 
 
+    <script>
+        $(document).on('click','.resumedt',function(e){
+            id = $(this).attr('id');
+
+            $.ajax({
+                url:'/'+id+'/resumedt',
+                type:'post',
+                data:{
+                    id
+
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#daybox').html(data['html'])
+
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
+
+                }
+
+            })
+
+        })
+    </script> 
+
 {% endblock %}

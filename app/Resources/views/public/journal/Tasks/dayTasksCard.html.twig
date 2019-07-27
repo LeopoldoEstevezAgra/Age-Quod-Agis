@@ -16,17 +16,17 @@
 			<li>
 				{% if dTask.finished == true %}
 				<div class="width-100" style="text-align: left">&#x2192;<strike>{{dTask.description}}</strike>
-					<a href="{{path('journal_dtask_resume',{'id':dTask.id})}}">
-						<i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                    <a id="{{dTask.id}}" class="resumedt"  href="#">
+                        <i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
-                    <a  href="#">
-						<i id="delete-{{dTask.id}}"class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                    <a id = "{{dTask.id}}" class="deletedt" href="#">
+						<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
 				</div>
 				{% else %}
 				<div class="width-100" style="text-align: left">&#x2192;{{dTask.description}}
-					<a href="{{path('journal_dtask_finish',{'id':dTask.id})}}">
-						<i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
+                    <a href="{{path('journal_dtask_finish',{'id':dTask.id})}}">
+						<i id="finishdt-{{dTask.id}}" class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 					</a>
                     <a id = "{{dTask.id}}" class="deletedt" href="#">
 						<i class="fas fa-trash-alt pd-left-15 f-right mg-right-10 mg-top-5"></i>

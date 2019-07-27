@@ -275,6 +275,40 @@ class TasksController extends Controller
      */
     public function resumeDayTaskAction(Request $request, DayTask $dayTask)
     {
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
+
+            $dayTask = new DayTask();
+            $formDay= $this->createForm(DayTaskType::class, $dayTask);
+
+
+            $id=$request->request->get('id');
+            $dayTask = $userDayTaskRepository->find($id);
+            $dayTask->setFinished(false);
+            $em->flush();
+
+            $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/dayTasksCard.html.twig',
+                    [
+                        'formDay' => $formDay->createView(),
+                        'dayTasks' => $userDayTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $dayTask->setFinished(false);
         $em->flush();
