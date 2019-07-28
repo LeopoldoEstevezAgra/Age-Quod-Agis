@@ -8,7 +8,7 @@
 			{% if mTask.finished == true %}
 			<div class="width-100" style="text-align: left">&#x2192;<strike>{{mTask.description}}</strike>
 
-				<a href="{{path('journal_mtask_resume',{'id':mTask.id})}}">
+				<a id="{{mTask.id}}"class="resumemt" href="#">
 					<i class="far fa-check-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 				</a>
 				<a id="{{mTask.id}}"class="deletemt" href="#">
@@ -17,7 +17,7 @@
 			</div>
 			{% else %}
 			<div class="width-100" style="text-align: left">&#x2192;{{mTask.description}}
-				<a href="{{path('journal_mtask_finish',{'id':mTask.id})}}">
+				<a id="{{mTask.id}}"class="finishmt" href="#">
 					<i class="far fa-square pd-left-15 f-right mg-right-10 mg-top-5"></i>
 				</a>
                 <a id="{{mTask.id}}"class="deletemt" href="#">
