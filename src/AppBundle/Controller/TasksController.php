@@ -260,6 +260,40 @@ class TasksController extends Controller
      */
     public function finishDayTaskAction(Request $request, DayTask $dayTask)
     {
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userDayTaskRepository = $this->getDoctrine()->getRepository(DayTask::class);
+
+            $dayTask = new DayTask();
+            $formDay= $this->createForm(DayTaskType::class, $dayTask);
+
+
+            $id=$request->request->get('id');
+            $dayTask = $userDayTaskRepository->find($id);
+            $dayTask->setFinished(true);
+            $em->flush();
+
+            $userDayTasks = $userDayTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/dayTasksCard.html.twig',
+                    [
+                        'formDay' => $formDay->createView(),
+                        'dayTasks' => $userDayTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $dayTask->setFinished(true);
         $em->flush();
@@ -324,6 +358,40 @@ class TasksController extends Controller
      */
     public function finishMonthTaskAction(Request $request, MonthTask $monthTask)
     {
+
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
+
+            $monthTask = new MonthTask();
+            $formMonth= $this->createForm(MonthTaskType::class, $monthTask);
+
+
+            $id=$request->request->get('id');
+            $monthTask = $userMonthTaskRepository->find($id);
+            $monthTask->setFinished(true);
+            $em->flush();
+
+            $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/monthTasksCard.html.twig',
+                    [
+                        'formMonth' => $formMonth->createView(),
+                        'monthTasks' => $userMonthTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+        }
         $em = $this->getDoctrine()->getManager();
         $monthTask->setFinished(true);
         $em->flush();
@@ -339,6 +407,40 @@ class TasksController extends Controller
      */
     public function resumeMonthTaskAction(Request $request, monthTask $monthTask)
     {
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            $currentMonth = (new \DateTime())->format('m');
+            $currentYear = (new \DateTime())->format('Y');
+
+            $userMonthTaskRepository = $this->getDoctrine()->getRepository(MonthTask::class);
+
+            $monthTask = new MonthTask();
+            $formMonth= $this->createForm(MonthTaskType::class, $monthTask);
+
+
+            $id=$request->request->get('id');
+            $monthTask = $userMonthTaskRepository->find($id);
+            $monthTask->setFinished(false);
+            $em->flush();
+
+            $userMonthTasks = $userMonthTaskRepository->getThisMonthsTasks(
+                $this->getUser()->getId(), 
+                $currentMonth, 
+                $currentYear);
+
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/Tasks/monthTasksCard.html.twig',
+                    [
+                        'formMonth' => $formMonth->createView(),
+                        'monthTasks' => $userMonthTasks,
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $monthTask->setFinished(false);
         $em->flush();
