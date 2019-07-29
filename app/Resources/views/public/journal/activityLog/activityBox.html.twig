@@ -1,0 +1,47 @@
+<div class="box-content">
+    <table class= "width-100">
+
+        {% set cellCounter = 1 %}
+        {% for unit in units %}
+
+            {% if cellCounter == 1 %}
+                <tr>
+                    <td style="border:1px solid;max-width:10px;height:20px;background-color:{{unit.color}}">
+
+                    </td>
+                    {% set cellCounter = cellCounter + 1 %}
+
+            {% elseif cellCounter != 1 and cellCounter != 24 %}
+                <td style="border:1px solid;max-width:10px;height:20px;background-color:{{unit.color}}">
+                </td>
+                {% set cellCounter = cellCounter + 1 %}
+
+            {% elseif cellCounter == 24 %}
+                <td style="border:1px solid;max-width:10px;height:20px;background-color:{{unit.color}}">
+
+                </td>
+                {% set cellCounter = 1 %}
+                </tr>
+            {% endif %}
+
+        {% endfor %}
+    </table>
+
+</div>
+<div>
+    {{form_start(form)}}
+    <div class="container-fluid move-bottom">
+        <div class="row ">
+            {{form_widget(form.type,{'attr':{'class':'col-8 dropdown'}})}}
+            {{form_widget(form.amount,{'attr':{'class':'col-2 task-description'}})}}
+
+            <a class="col-2 asubmit " id="day_unit_ajax">
+                <i class="fas fa-plus submit-icon"></i>
+            </a> 
+
+        </div>
+
+    </div>
+    {{form_end(form)}}
+
+</div>

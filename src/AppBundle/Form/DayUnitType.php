@@ -46,9 +46,6 @@ class DayUnitType extends AbstractType
                     'placeholder'=>0 
                 )
             ))
-            ->add('submit',SubmitType::class,[
-                'label'=>false
-            ])
         ;
     }
 
