@@ -63,8 +63,6 @@ class ActivityLogController extends Controller
         $maxHourId = (int)$maxHourId[0]['hourId'];
         $hoursAvailable = $maxHourMonth - $maxHourId;
 
-        $form->handleRequest($request);
-
         if($request->isXmlHttpRequest()){
             $dayUnitAmount = $request->request->get('dayUnitAmount');
             $dayUnitType= $request->request->get('dayUnitType');
@@ -80,9 +78,6 @@ class ActivityLogController extends Controller
             if($dayUnit->getAmount() > $hoursAvailable){
                 $dayUnit->setAmount($hoursAvailable);
             }
-            if($dayUnit->getAmount() == 0 ){
-                return $this->redirectToRoute('journal_activityLog_index');
-            }
 
             $dayUnit->setUser($this->getUser());
             switch($dayUnit->getType()){
@@ -128,9 +123,14 @@ class ActivityLogController extends Controller
                 $em->flush();
             }
 
+            $monthUnits = $dayUnitRepository->getMonthUnits(
+                $this->getUser()->getId(),
+                $currentMonth,
+                $currentYear
+            );
             $jsonData = array(
                 'html' => $this->renderView(
-                    'public/journal/activityLog/index.html.twig',
+                    'public/journal/activityLog/activityBox.html.twig',
                     [
                         'dayUnit'=>$dayUnit,
                         'form'=>$form->createView(),
@@ -139,64 +139,12 @@ class ActivityLogController extends Controller
                 )
             );
             return new JsonResponse($jsonData);
-
-
-
-        }elseif($form->isSubmitted() && $form->isValid()){
-            if($dayUnit->getAmount() > $hoursAvailable){
-                $dayUnit->setAmount($hoursAvailable);
-            }
-            if($dayUnit->getAmount() == 0 ){
-                return $this->redirectToRoute('journal_activityLog_index');
-            }
-
-            $dayUnit->setUser($this->getUser());
-            switch($dayUnit->getType()){
-            case 'sleeping':
-                $dayUnit->setColor('gray');
-                break;
-            case 'general':
-                $dayUnit->setColor('green');
-                break;
-            case 'personalWork':
-                $dayUnit->setColor('lightblue');
-                break;
-            case 'study':
-                $dayUnit->setColor('blue');
-                break;
-            case 'work':
-                $dayUnit->setColor('navy');
-                break;
-            case 'procrastination':
-                $dayUnit->setColor('silver');
-                break;
-            case 'wasted':
-                $dayUnit->setColor('black');
-                break;
-            case 'reading':
-                $dayUnit->setColor('lime');
-                break;
-            case 'social':
-                $dayUnit->setColor('purple');
-                break;
-            case 'unmarked':
-                $dayUnit->setColor('#EFEFEF');
-                break;
-            default:
-                $dayUnit->setcolor('white');
-            }
-
-            for($i = 1; $i <= $dayUnit->getAmount(); $i++){
-                $temp = clone $dayUnit;
-                $em = $this->getDoctrine()->getManager();
-                $temp->setHourId($maxHourId + $i);
-                $em->persist($temp);
-                $em->flush();
-            }
-
-            return $this->redirectToRoute('journal_activityLog_index');
         }
-
+        $monthUnits = $dayUnitRepository->getMonthUnits(
+            $this->getUser()->getId(),
+            $currentMonth,
+            $currentYear
+        );
         return $this->render('public/journal/activityLog/index.html.twig',
             array(
                 'dayUnit'=>$dayUnit,
