@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -62,14 +63,20 @@ class ActivityLogController extends Controller
         $maxHourId = (int)$maxHourId[0]['hourId'];
         $hoursAvailable = $maxHourMonth - $maxHourId;
 
-        $form->handleRequest($request);
+        if($request->isXmlHttpRequest()){
+            $dayUnitAmount = $request->request->get('dayUnitAmount');
+            $dayUnitType= $request->request->get('dayUnitType');
 
-        if($form->isSubmitted() && $form->isValid()){
+            /*
+            $dayUnit = new DayUnit();
+             */
+
+            $dayUnit->setUser($this->getUser());
+            $dayUnit->setAmount($dayUnitAmount);
+            $dayUnit->setType($dayUnitType);
+
             if($dayUnit->getAmount() > $hoursAvailable){
                 $dayUnit->setAmount($hoursAvailable);
-            }
-            if($dayUnit->getAmount() == 0 ){
-                return $this->redirectToRoute('journal_activityLog_index');
             }
 
             $dayUnit->setUser($this->getUser());
@@ -116,9 +123,28 @@ class ActivityLogController extends Controller
                 $em->flush();
             }
 
-			return $this->redirectToRoute('journal_activityLog_index');
+            $monthUnits = $dayUnitRepository->getMonthUnits(
+                $this->getUser()->getId(),
+                $currentMonth,
+                $currentYear
+            );
+            $jsonData = array(
+                'html' => $this->renderView(
+                    'public/journal/activityLog/activityBox.html.twig',
+                    [
+                        'dayUnit'=>$dayUnit,
+                        'form'=>$form->createView(),
+                        'units' => $monthUnits
+                    ]
+                )
+            );
+            return new JsonResponse($jsonData);
         }
-
+        $monthUnits = $dayUnitRepository->getMonthUnits(
+            $this->getUser()->getId(),
+            $currentMonth,
+            $currentYear
+        );
         return $this->render('public/journal/activityLog/index.html.twig',
             array(
                 'dayUnit'=>$dayUnit,

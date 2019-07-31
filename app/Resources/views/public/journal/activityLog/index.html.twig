@@ -2,63 +2,58 @@
 
 {% extends "public/journal/base.html.twig" %}
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('build/css/journal/index.css')}}">
 
 {% endblock %}
 
 {% block sectionTitle %}
-   Month Activity Log 
+    Month Activity Log 
 {% endblock %}
 
 {% block body %}
 
     <div class="row justify-content-center">
-        <div name="box" class="col-10 col-lg-5 box">
-            <div class="box-content">
-                <table class= "width-100">
-
-                    {% set cellCounter = 1 %}
-                    {% for unit in units %}
-                        
-                        {% if cellCounter == 1 %}
-                            <tr>
-                                <td style="border:1px solid;max-width:10px;height:20px;background-color:{{unit.color}}">
-
-                                </td>
-                            {% set cellCounter = cellCounter + 1 %}
-
-                        {% elseif cellCounter != 1 and cellCounter != 24 %}
-                                <td style="border:1px solid;max-width:10px;height:20px;background-color:{{unit.color}}">
-                                </td>
-                            {% set cellCounter = cellCounter + 1 %}
-
-                        {% elseif cellCounter == 24 %}
-                                <td style="border:1px solid;max-width:10px;height:20px;background-color:{{unit.color}}">
-
-                                </td>
-                            {% set cellCounter = 1 %}
-                            </tr>
-                        {% endif %}
-
-                    {% endfor %}
-                </table>
-
+        <div id ="activitybox" name="box" class="col-10 col-lg-5 box">
+            <div >
+                {% include "public/journal/activityLog/activityBox.html.twig" %}
             </div>
-            <div>
-                {{form_start(form)}}
-                <div class="container-fluid move-bottom">
-                    <div class="row ">
-                        {{form_widget(form.type,{'attr':{'class':'col-8 dropdown'}})}}
-                        {{form_widget(form.amount,{'attr':{'class':'col-2 task-description'}})}}
-                        {{form_widget(form.submit,{'attr':{'class':'col-2 submit fas fa-plus'}})}}
-
-                    </div>
-
-                </div>
-                {{form_end(form)}}
-
-            </div>
+        
         </div>
     </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).on('click','#day_unit_ajax',function(e){
+            dayUnitAmount= $('#day_unit_amount').val()
+            dayUnitType= $('#day_unit_type').val()
+
+            $.ajax({
+                url:'/activityLog/',
+                type:'post',
+                data:{
+                    dayUnitAmount,
+                    dayUnitType
+                },
+                dataType: 'json',
+                async: true,
+                success: function(data, status){
+                    $('#activitybox').html(data['html'])
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    console.error('Ajax request failed')
+
+                }
+
+            })
+            return false;
+
+        })
+
+    </script>
+
+
 {% endblock %}
