@@ -46,6 +46,13 @@ class Bug
     private $description;
 
     /**
+     * @var boolean 
+     *
+     * @ORM\Column(name="solved", type="boolean")
+     */
+    private $solved;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateAt", type="datetime")
@@ -139,6 +146,30 @@ class Bug
     public function getScreen()
     {
         return $this->screen;
+    }
+    
+    /**
+     * Set solved 
+     *
+     * @param boolean $solved
+     *
+     * @return Bug
+     */
+    public function setSolved ($solved)
+    {
+        $this->solved= $solved;
+
+        return $this;
+    }
+
+    /**
+     * Get solved 
+     *
+     * @return boolean 
+     */
+    public function getSolved()
+    {
+        return $this->solved;
     }
 
     /**
