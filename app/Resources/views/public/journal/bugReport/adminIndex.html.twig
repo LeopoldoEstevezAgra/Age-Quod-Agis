@@ -15,21 +15,16 @@ th, td {
 {% endblock %}
 
 {% block body %}
-    <table style="width:100%">
+    <table class="width-100" >
         <tr>
-            <th>Img</th>
             <th>Title</th> 
             <th>Screen</th> 
             <th>Description</th>
+            <th>Img</th>
         </tr>
 
         {% for bug in bugs %}
             <tr>
-                <td class="text-center" style="width: 10px;">
-                    {% if bug.imageName %}
-                        <img style="" src="{{ vich_uploader_asset(bug, 'imageFile') }}" alt="" />
-                    {% endif %}
-                </td>
                 <td>
                     {{ bug.title }}
                 </td>
@@ -38,6 +33,11 @@ th, td {
                 </td>
                 <td>
                     {{ bug.description }}
+                </td>
+                <td class="text-center" style="width: 10px;">
+                    {% if bug.imageName %}
+                        <img style="" src="{{ vich_uploader_asset(bug, 'imageFile') }}" alt="" />
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
