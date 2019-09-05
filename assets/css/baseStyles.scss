@@ -1,19 +1,31 @@
+/*
+ Margins 
+ */
+
+ // General
 .mg-0{
     margin: 0% !important
 }
-.mg-top-30{
-    margin-top: 30px
+
+// Top 
+.mg-top-5{
+    margin-top: 5px
 }
+
 .mg-top-10{
     margin-top: 10px
 }
 
-.mg-top-5{
-    margin-top: 5px
+.mg-top-30{
+    margin-top: 30px
 }
+
+// Bottom
 .mg-bt-10{
     margin-bottom: 10px
 }
+
+// Right
 .mg-right-30{
     margin-right: 30px
 }
@@ -22,21 +34,32 @@
     margin-right: 10px
 }
 
-.mg-left-30{
-    margin-right: 30px
-}
-
+// Left
 .mg-left-15{
     margin-left: 15px
 }
 
+.mg-left-30{
+    margin-right: 30px
+}
+
+/*
+* Paddings 
+*/
+
+// General
 .pd-10{
     padding: 10px;
 }
 
+// Left
 .pd-left-15{
     padding-left: 15px
 }
+/*
+* Backgrounds
+*/
+
 .bg-darkgray{
     background-color: darkgrey;
 }
@@ -50,10 +73,44 @@
    border-radius: 30px; 
 }
 
+/*
+* Text 
+*/
+
+// Color 
+.green-text{
+    color:green 
+}
+
+.red-text{
+    color:red
+}
+.gray-text{
+    color:gray
+}
+
+// Fonts size
+.font-20{
+    font-size: 20px;
+}
+
+// Links
+.link-none-style{
+    color:white;
+    text-decoration: none
+}
+
+
+/*
+* Sizes
+*/
+
+// Width
 .width-100{
     width: 100%;
 }
 
+// Heigth
 .height-100{
     height: 100%;
 }
@@ -68,6 +125,9 @@
     height: 90%;
 }
 
+/*
+* Alignment
+*/
 .center{
     margin-left: auto;
     margin-right: auto;
@@ -95,24 +155,6 @@
     overflow-x: hidden !important;
 }
 
-.green-text{
-    color:green 
-}
-
-.red-text{
-    color:red
-}
-.gray-text{
-    color:gray
-}
-.link-none-style{
-    color:white;
-    text-decoration: none
-}
-
-.font-20{
-    font-size: 20px;
-}
 
 .hr-line-dashed{
     border-top:1px dashed
