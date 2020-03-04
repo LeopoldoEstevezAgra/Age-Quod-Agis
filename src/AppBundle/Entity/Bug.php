@@ -46,11 +46,11 @@ class Bug
     private $description;
 
     /**
-     * @var boolean 
+     * @var boolean
      *
      * @ORM\Column(name="solved", type="boolean")
      */
-    private $solved;
+    private $solved = false;
 
     /**
      * @var \DateTime
@@ -147,9 +147,9 @@ class Bug
     {
         return $this->screen;
     }
-    
+
     /**
-     * Set solved 
+     * Set solved
      *
      * @param boolean $solved
      *
@@ -163,9 +163,9 @@ class Bug
     }
 
     /**
-     * Get solved 
+     * Get solved
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSolved()
     {
