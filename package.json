@@ -5,7 +5,7 @@
     "croppie": "^2.5.1",
     "datatables.net-bs4": "^1.10.16",
     "font-awesome": "^4.7.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.0.1"
   },
   "dependencies": {
